@@ -1,0 +1,227 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+
+interface Props {
+  paginas: ImageMetadata[];
+  titel: string;
+}
+
+const { paginas, titel } = Astro.props;
+const laatste = paginas.length - 1;
+---
+
+<div class="boekje" data-boekje>
+  <div class="boekje-houder" data-stand="dicht">
+    <div class="boekje-boek" data-flip>
+      {paginas.map((pagina, index) => (
+        <div class="boekje-pagina" data-density={index === 0 || index === laatste ? 'hard' : 'soft'}>
+          <Image
+            src={pagina}
+            alt={`Pagina ${index + 1} van de ${titel.toLowerCase()}`}
+            widths={[640, 1240]}
+            sizes="(min-width: 1000px) 31rem, 92vw"
+            loading={index < 3 ? 'eager' : 'lazy'}
+            draggable="false"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+  <div class="boekje-bediening">
+    <button class="boekje-knop" type="button" data-terug aria-label="Vorige pagina"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg></button>
+    <span class="boekje-teller" data-teller aria-live="polite">cover</span>
+    <button class="boekje-knop" type="button" data-verder aria-label="Volgende pagina"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg></button>
+  </div>
+</div>
+
+<script>
+  import { PageFlip } from 'page-flip';
+
+  const vooruitLaden = 4;
+
+  document.querySelectorAll<HTMLElement>('[data-boekje]').forEach((boekje) => {
+    const houder = boekje.querySelector<HTMLElement>('.boekje-houder')!;
+    const element = boekje.querySelector<HTMLElement>('[data-flip]')!;
+    const teller = boekje.querySelector<HTMLElement>('[data-teller]')!;
+    const paginas = [...boekje.querySelectorAll<HTMLElement>('.boekje-pagina')];
+    const laatste = paginas.length - 1;
+    const zonderBeweging = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let richting = 1;
+
+    const boek = new PageFlip(element, {
+      width: 550,
+      height: 389,
+      size: 'stretch',
+      minWidth: 260,
+      maxWidth: 620,
+      minHeight: 184,
+      maxHeight: 438,
+      showCover: true,
+      usePortrait: true,
+      drawShadow: true,
+      maxShadowOpacity: 0.18,
+      flippingTime: zonderBeweging ? 1 : 900,
+      mobileScrollSupport: true
+    });
+    boek.loadFromHTML(paginas);
+
+    const laadRond = (index: number) => {
+      paginas.slice(Math.max(0, index - 2), index + vooruitLaden + 1).forEach((pagina) => {
+        const beeld = pagina.querySelector('img');
+        if (beeld) beeld.loading = 'eager';
+      });
+    };
+    const zetStand = (index: number) => {
+      houder.dataset.stand = boek.getOrientation() === 'portrait' ? 'open' : index === 0 ? 'dicht' : index >= laatste ? 'einde' : 'open';
+    };
+    const zetTeller = (index: number) => {
+      if (index === 0 || index >= laatste) {
+        teller.textContent = index === 0 ? 'cover' : 'achterkant';
+      } else if (boek.getOrientation() === 'portrait') {
+        teller.textContent = `pagina ${index + 1}`;
+      } else {
+        const links = index % 2 === 0 ? index : index + 1;
+        teller.textContent = `pagina ${links} en ${links + 1}`;
+      }
+    };
+    const doelVan = (index: number) =>
+      richting > 0 ? Math.min(laatste, index === 0 ? 1 : index + 2) : Math.max(0, index <= 2 ? 0 : index - 2);
+
+    element.addEventListener('pointerdown', (event) => {
+      const vlak = element.getBoundingClientRect();
+      richting = event.clientX > vlak.left + vlak.width / 2 ? 1 : -1;
+    });
+    boek.on('changeState', (event) => {
+      if (event.data !== 'flipping') return;
+      const doel = doelVan(boek.getCurrentPageIndex());
+      laadRond(doel);
+      zetStand(doel);
+    });
+    boek.on('flip', (event) => {
+      const index = Number(event.data);
+      laadRond(index);
+      zetStand(index);
+      zetTeller(index);
+    });
+    boek.on('changeOrientation', () => {
+      zetStand(boek.getCurrentPageIndex());
+      zetTeller(boek.getCurrentPageIndex());
+    });
+    boekje.querySelector('[data-verder]')?.addEventListener('click', () => {
+      richting = 1;
+      laadRond(boek.getCurrentPageIndex() + 2);
+      boek.flipNext();
+    });
+    boekje.querySelector('[data-terug]')?.addEventListener('click', () => {
+      richting = -1;
+      boek.flipPrev();
+    });
+    zetStand(0);
+    zetTeller(0);
+  });
+</script>
+
+<style>
+  .boekje {
+    margin-top: 2rem;
+  }
+
+  .boekje-houder {
+    max-width: 62rem;
+    margin-inline: auto;
+    transition: transform 0.9s cubic-bezier(0.4, 0.1, 0.2, 1);
+  }
+
+  .boekje-houder[data-stand='dicht'] {
+    transform: translateX(-25%);
+  }
+
+  .boekje-houder[data-stand='einde'] {
+    transform: translateX(25%);
+  }
+
+  .boekje-pagina {
+    overflow: hidden;
+    background: var(--creme);
+  }
+
+  .boekje-pagina::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .boekje-pagina:nth-child(even)::after {
+    background: linear-gradient(270deg, color-mix(in srgb, var(--inkt) 16%, transparent), transparent 6%);
+  }
+
+  .boekje-pagina:nth-child(odd)::after {
+    background: linear-gradient(90deg, color-mix(in srgb, var(--inkt) 16%, transparent), transparent 6%);
+  }
+
+  .boekje-pagina:first-child::after,
+  .boekje-pagina:last-child::after {
+    background: none;
+  }
+
+  .boekje-pagina img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .boekje-bediening {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.25rem;
+  }
+
+  .boekje-teller {
+    min-width: 9rem;
+    font-family: var(--font-hand);
+    font-size: 1.25rem;
+    text-align: center;
+  }
+
+  .boekje-knop {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--creme);
+    color: var(--bordeaux);
+    cursor: pointer;
+  }
+
+  .boekje-knop svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .boekje-knop:hover {
+    background: var(--olijf-licht);
+    color: var(--inkt);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .boekje-houder {
+      transition: none;
+    }
+  }
+</style>

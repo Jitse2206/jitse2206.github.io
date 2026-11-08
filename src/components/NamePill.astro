@@ -1,0 +1,39 @@
+---
+interface Props {
+  formaat?: 'groot' | 'middel';
+  rand?: boolean;
+  class?: string;
+}
+
+const { formaat = 'groot', rand = false, class: className } = Astro.props;
+---
+
+<p class:list={['naampil', `naampil-${formaat}`, { 'naampil-rand': rand }, className]}>Jitse Van Laer</p>
+
+<style>
+  .naampil {
+    display: inline-block;
+    margin: 0;
+    border-radius: 999px;
+    background: var(--creme);
+    color: var(--bordeaux);
+    font-family: var(--font-display);
+    font-weight: 800;
+    line-height: 1.15;
+    white-space: nowrap;
+  }
+
+  .naampil-groot {
+    padding: 0.4em 0.85em;
+    font-size: clamp(1.625rem, 3.6vw, 2.875rem);
+  }
+
+  .naampil-middel {
+    padding: 0.4em 0.9em;
+    font-size: clamp(1.375rem, 2.4vw, 1.875rem);
+  }
+
+  .naampil-rand {
+    border: 3px solid var(--bordeaux);
+  }
+</style>

@@ -1,0 +1,162 @@
+---
+import { Picture } from 'astro:assets';
+import Notitie from './Notitie.astro';
+import { pad } from '../utils/pad';
+import type { Project } from '../utils/projecten';
+
+interface Props {
+  project: Project;
+  eager?: boolean;
+}
+
+const { project, eager = false } = Astro.props;
+const { titel, beschrijving, kort, tags, cover } = project.data;
+const laagTekst = beschrijving ?? kort;
+---
+
+<article class="projectkaart" data-tags={tags.join('|')}>
+  <a class="kaart-link" href={pad(`projecten/${project.id}/`)}>
+    <Picture
+      class="kaart-beeld"
+      src={cover.src}
+      alt={cover.alt}
+      widths={[400, 700, 1000]}
+      sizes="(min-width: 1100px) 370px, (min-width: 700px) 46vw, 92vw"
+      formats={['avif', 'webp']}
+      loading={eager ? 'eager' : 'lazy'}
+    />
+    <div class="kaart-onder">
+      {tags.length > 0 && (
+        <ul class="tags">
+          {tags.map((tag) => <li>{tag}</li>)}
+        </ul>
+      )}
+      <h2 class="kaart-titel">{titel}</h2>
+      {kort && <p class="kaart-kort">{kort}</p>}
+    </div>
+    <div class="kaart-laag" aria-hidden="true">
+      <p class="laag-titel">{titel}</p>
+      {laagTekst ? <p class="laag-tekst">{laagTekst}</p> : <Notitie tekst="beschrijving aan te vullen" />}
+    </div>
+  </a>
+</article>
+
+<style>
+  .projectkaart {
+    min-width: 0;
+  }
+
+  .kaart-link {
+    position: relative;
+    display: block;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 20px;
+    background: var(--creme);
+    color: var(--inkt);
+    text-decoration: none;
+  }
+
+  .kaart-link :global(.kaart-beeld),
+  .kaart-link :global(.kaart-beeld img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+
+  .kaart-onder {
+    padding: 0.875rem 1rem 1rem;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin: 0 0 0.25rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tags li {
+    padding: 0.2rem 0.625rem;
+    border-radius: 999px;
+    background: var(--olijf);
+    color: var(--tekst-op-olijf);
+    font-size: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .kaart-titel {
+    margin: 0;
+    color: var(--bordeaux);
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  .kaart-kort {
+    display: none;
+    margin: 0.25rem 0 0;
+    font-size: 0.875rem;
+  }
+
+  .kaart-laag {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    background: color-mix(in srgb, var(--bordeaux) 90%, transparent);
+    color: var(--creme);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .laag-titel {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.625rem;
+    font-weight: 900;
+    font-stretch: 125%;
+    line-height: 1.05;
+  }
+
+  .laag-tekst {
+    margin: 0;
+  }
+
+  .kaart-link:hover .kaart-laag,
+  .kaart-link:focus-visible .kaart-laag {
+    opacity: 1;
+  }
+
+  .kaart-link:focus-visible {
+    outline: 3px solid var(--olijf-licht);
+    outline-offset: 4px;
+  }
+
+  @media (min-width: 700px) {
+    .kaart-link {
+      border-radius: 22px;
+    }
+
+    .kaart-onder {
+      padding: 1.125rem 1.25rem 1.25rem;
+    }
+
+    .kaart-titel {
+      margin-top: 0.375rem;
+      font-size: 1.625rem;
+    }
+
+    .kaart-kort {
+      display: block;
+    }
+
+  }
+</style>

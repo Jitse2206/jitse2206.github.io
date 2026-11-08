@@ -1,0 +1,81 @@
+---
+interface Props {
+  filters: { waarde: string; label: string }[];
+  doel: string;
+}
+
+const { filters, doel } = Astro.props;
+---
+
+<div class="filterpillen" role="group" aria-label="Filter projecten" data-filter-doel={doel}>
+  <button type="button" class="filterpil" aria-pressed="true" data-filter="">Alles</button>
+  {filters.map((filter) => (
+    <button type="button" class="filterpil" aria-pressed="false" data-filter={filter.waarde}>{filter.label}</button>
+  ))}
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-filter-doel]').forEach((groep) => {
+    const doel = document.getElementById(groep.dataset.filterDoel ?? '');
+    if (!doel) return;
+
+    const knoppen = groep.querySelectorAll<HTMLButtonElement>('[data-filter]');
+    const onderdelen = doel.querySelectorAll<HTMLElement>('[data-tags]');
+
+    knoppen.forEach((knop) => {
+      knop.addEventListener('click', () => {
+        const filter = knop.dataset.filter ?? '';
+
+        knoppen.forEach((andereKnop) => andereKnop.setAttribute('aria-pressed', String(andereKnop === knop)));
+        onderdelen.forEach((onderdeel) => {
+          const tags = (onderdeel.dataset.tags ?? '').split('|');
+          onderdeel.hidden = filter !== '' && !tags.includes(filter);
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .filterpillen {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-block: 0.25rem;
+    scrollbar-width: none;
+  }
+
+  .filterpil {
+    flex: none;
+    padding: 0.625rem 1.125rem;
+    border: 2px solid var(--creme);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--creme);
+    font-size: 0.9375rem;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .filterpil:hover {
+    background: color-mix(in srgb, var(--creme) 15%, transparent);
+  }
+
+  .filterpil[aria-pressed='true'] {
+    background: var(--creme);
+    color: var(--bordeaux);
+  }
+
+  @media (min-width: 700px) {
+    .filterpillen {
+      flex-wrap: wrap;
+      gap: 0.625rem;
+      overflow: visible;
+    }
+
+    .filterpil {
+      padding: 0.625rem 1.25rem;
+      font-size: 1rem;
+    }
+  }
+</style>

@@ -1,0 +1,179 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import DisplayTitle from '../components/DisplayTitle.astro';
+import NamePill from '../components/NamePill.astro';
+import Marquee from '../components/Marquee.astro';
+import Timeline from '../components/Timeline.astro';
+import type { TijdlijnItem } from '../components/Timeline.astro';
+import { projectenOpStap } from '../utils/projecten';
+import { pad } from '../utils/pad';
+import portret from '../assets/jitse/jitse-uitgeknipt.png';
+
+const tijdlijn: TijdlijnItem[] = (await projectenOpStap())
+  .filter((project) => project.data.stap !== undefined)
+  .map((project) => ({
+    label: `stap ${project.data.stap}`,
+    titel: project.data.titel,
+    details: project.data.tijdlijn ? [project.data.tijdlijn] : [],
+    href: pad(`projecten/${project.id}/`),
+    beeld: project.data.cover
+  }));
+---
+
+<Base title="Industrial Designer">
+  <main id="inhoud">
+    <section class="hero" aria-label="Introductie">
+      <div class="hero-titel">
+        <DisplayTitle titel="Industrial" omlijning="Designer" echo max={138} />
+      </div>
+      <Picture
+        pictureAttributes={{ class: 'hero-portret' }}
+        src={portret}
+        alt="Portret van Jitse Van Laer"
+        widths={[340, 480, 680, 804]}
+        sizes="(min-width: 900px) 480px, 340px"
+        formats={['avif', 'webp']}
+        loading="eager"
+        fetchpriority="high"
+      />
+      <NamePill class="hero-naam" />
+    </section>
+
+    <Marquee items={['Industrieel Ontwerper', 'Siemens NX', 'prototyping', 'VRed', 'Affinity', 'gebruikerstesten']} />
+
+    <section class="projecten" aria-labelledby="projecten-titel">
+      <div class="projecten-kop">
+        <h2 id="projecten-titel" class="projecten-titel">Projecten</h2>
+        <p class="projecten-ondertitel">van eerste prototype tot vandaag</p>
+      </div>
+      <Timeline items={tijdlijn} wisselend />
+      <div class="meer">
+        <a class="knop knop-creme" href={pad('projecten/')}>Meer projecten</a>
+      </div>
+    </section>
+  </main>
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    min-height: 35rem;
+    max-width: 80rem;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .hero > :global(*) {
+    grid-area: 1 / 1;
+  }
+
+  .hero-titel {
+    align-self: start;
+    padding: 1.25rem 1rem 0;
+  }
+
+  .hero :global(.hero-portret) {
+    position: relative;
+    align-self: end;
+    justify-self: center;
+    width: min(340px, 88vw);
+  }
+
+  .hero :global(.hero-portret) img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .hero :global(.hero-naam) {
+    position: relative;
+    align-self: end;
+    justify-self: start;
+    margin: 0 0 1.625rem 1rem;
+  }
+
+  .projecten {
+    max-width: 71.25rem;
+    margin: 0 auto;
+    padding: 3.125rem 1rem 3.75rem;
+  }
+
+  .projecten-kop {
+    margin-bottom: 1.875rem;
+  }
+
+  .projecten-titel {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 900;
+    font-stretch: 125%;
+    line-height: 1;
+  }
+
+  .projecten-ondertitel {
+    margin: 0.25rem 0 0;
+    color: var(--olijf-licht);
+    font-size: 0.9375rem;
+  }
+
+  .meer {
+    margin-top: 2.75rem;
+  }
+
+  .meer .knop {
+    display: block;
+  }
+
+  @media (min-width: 900px) {
+    .hero {
+      min-height: 48.75rem;
+    }
+
+    .hero-titel {
+      padding: 1.875rem 2rem 0;
+    }
+
+    .hero-titel :global(.display-titel) {
+      text-align: center;
+    }
+
+    .hero :global(.hero-portret) {
+      width: 30rem;
+    }
+
+    .hero :global(.hero-naam) {
+      margin: 0 0 7.5rem 7%;
+    }
+
+    .projecten {
+      padding: 5rem 2rem 6.25rem;
+    }
+
+    .projecten-kop {
+      margin-bottom: 4rem;
+      text-align: center;
+    }
+
+    .projecten-titel {
+      font-size: 4.5rem;
+    }
+
+    .projecten-ondertitel {
+      margin-top: 0.375rem;
+      font-size: 1.125rem;
+    }
+
+    .meer {
+      margin-top: 4.5rem;
+      text-align: center;
+    }
+
+    .meer .knop {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+    }
+  }
+</style>

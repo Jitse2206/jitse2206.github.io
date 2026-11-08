@@ -1,0 +1,62 @@
+---
+interface Props {
+  titel: string;
+  omlijning?: string;
+  echo?: boolean;
+  as?: 'h1' | 'h2';
+  max?: number;
+  midden?: boolean;
+}
+
+const { titel, omlijning, echo = false, as: Tag = 'h1', max = 130, midden = false } = Astro.props;
+const woorden = [titel, omlijning ?? ''].flatMap((regel) => regel.split(/\s+/));
+const tekens = Math.max(6, ...woorden.map((woord) => woord.length));
+---
+
+<div class="display-titel-houder" style={`--tekens: ${tekens}; --max: ${max}px`}>
+  <Tag class:list={['display-titel', { midden }]}>
+    <span class="regel">{titel}</span>
+    {omlijning && <>{' '}<span class="regel omlijnd">{omlijning}</span></>}
+    {echo && <span class:list={['regel', 'omlijnd', 'echo', { 'echo-onder-titel': !omlijning }]} aria-hidden="true">{omlijning ?? titel}</span>}
+  </Tag>
+</div>
+
+<style>
+  .display-titel-houder {
+    width: 100%;
+    container-type: inline-size;
+  }
+
+  .display-titel {
+    margin: 0;
+    color: var(--creme);
+    font-family: var(--font-display);
+    font-size: min(var(--max), calc(100cqi / (var(--tekens) * 0.95)));
+    font-weight: 900;
+    font-stretch: 125%;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  .midden {
+    text-align: center;
+  }
+
+  .regel {
+    display: block;
+  }
+
+  .omlijnd {
+    color: transparent;
+    -webkit-text-stroke: max(1.5px, 0.015em) var(--creme);
+  }
+
+  .echo {
+    opacity: 0.35;
+  }
+
+  .echo-onder-titel {
+    margin-top: -0.2em;
+  }
+</style>

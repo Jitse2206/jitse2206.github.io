@@ -1,0 +1,666 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import DisplayTitle from '../../components/DisplayTitle.astro';
+import ProcessNav from '../../components/ProcessNav.astro';
+import TornPaper from '../../components/TornPaper.astro';
+import ProjectBeeld from '../../components/ProjectBeeld.astro';
+import Model3D from '../../components/Model3D.astro';
+import KaartGroepen from '../../components/KaartGroepen.astro';
+import Notitie from '../../components/Notitie.astro';
+import Boekje from '../../components/Boekje.astro';
+import { pad } from '../../utils/pad';
+import { alineas, groepeer, projectenOpStap } from '../../utils/projecten';
+import type { Project } from '../../utils/projecten';
+
+export async function getStaticPaths() {
+  const projecten = await projectenOpStap();
+
+  return projecten.map((project, index) => ({
+    params: { slug: project.id },
+    props: {
+      project,
+      vorige: projecten[(index - 1 + projecten.length) % projecten.length],
+      volgende: projecten[(index + 1) % projecten.length]
+    }
+  }));
+}
+
+interface Props {
+  project: Project;
+  vorige: Project;
+  volgende: Project;
+}
+
+const { project, vorige, volgende } = Astro.props;
+const { titel, stap, intro, beschrijving, tags, technieken, techniekblokken, extra, bundel, teksten, cover, coverOrigineel, model, beelden } = project.data;
+
+const [eersteWoord, ...overigeWoorden] = titel.split(' ');
+const label = stap !== undefined ? `project ${String(stap).padStart(2, '0')}` : '';
+const pillen = technieken.length > 0 ? technieken : tags;
+
+const ideeBeelden = beelden.filter((beeld) => beeld.rol === 'idee');
+const techniekBeelden = beelden.filter((beeld) => beeld.rol === 'techniek');
+const techniekgroepen = groepeer(techniekblokken, techniekBeelden);
+const extragroepen = extra ? groepeer(extra.blokken, beelden.filter((beeld) => beeld.rol === 'extra')) : [];
+const resultaatBeelden = beelden.filter((beeld) => beeld.rol === 'resultaat');
+const [hoofdResultaat, ...andereResultaten] = resultaatBeelden.length > 0 ? resultaatBeelden : [coverOrigineel];
+const kantelingen = [-2, 1.5, -1];
+
+const toon = {
+  briefing: Boolean(teksten.briefing),
+  ideegeneratie: Boolean(teksten.ideegeneratie) || ideeBeelden.length > 0,
+  technieken: Boolean(teksten.technieken) || techniekBeelden.length > 0,
+  resultaat: true,
+  bundel: Boolean(bundel),
+  reflectie: Boolean(teksten.reflectie),
+  extra: extragroepen.length > 0
+};
+
+const secties = [
+  { id: 'briefing', label: 'Briefing' },
+  { id: 'ideegeneratie', label: 'Ideegeneratie' },
+  { id: 'technieken', label: 'Technieken' },
+  { id: 'resultaat', label: 'Resultaat' },
+  { id: 'bundel', label: bundel?.titel ?? '' },
+  { id: 'reflectie', label: 'Reflectie' },
+  { id: 'extra', label: extra?.titel ?? '' }
+].filter((sectie) => toon[sectie.id as keyof typeof toon]);
+
+const buren = [
+  { soort: 'vorige', richting: '← vorig project', project: vorige },
+  { soort: 'volgende', richting: 'volgend project →', project: volgende }
+];
+---
+
+<Base
+  title={titel}
+  description={beschrijving ?? intro ?? `Project ${titel} van Jitse Van Laer, Industrial Designer.`}
+  terug={{ href: pad('projecten/'), label: 'Alle projecten' }}
+>
+  <main id="inhoud">
+    <header class="projectkop">
+      {label && <p class="projectlabel">{label}</p>}
+      <DisplayTitle titel={eersteWoord} omlijning={overigeWoorden.join(' ') || undefined} max={120} />
+      {pillen.length > 0 && (
+        <ul class="pillen">
+          {pillen.map((pil) => <li>{pil}</li>)}
+        </ul>
+      )}
+      {intro ? <p class="intro">{intro}</p> : <Notitie tekst="introtekst aan te vullen" />}
+    </header>
+
+    <div class="cover">
+      <div class="cover-kader" data-galerij>
+        <ProjectBeeld beeld={cover} widths={[600, 1000, 1400, 1800]} sizes="(min-width: 1200px) 1104px, 92vw" eager />
+        {model && <a class="knop knop-bordeaux model-knop" href="#resultaat">Bekijk in 3D ↻</a>}
+      </div>
+    </div>
+
+    <div class="proces">
+      <aside class="proces-zijbalk">
+        <ProcessNav secties={secties} />
+      </aside>
+
+      <div class="proces-inhoud">
+        {teksten.briefing && (
+          <section id="briefing" class="sectie" aria-labelledby="briefing-titel">
+            <h2 id="briefing-titel" class="sectiekop">Briefing</h2>
+            {alineas(teksten.briefing).map((alinea) => <p class="sectietekst">{alinea}</p>)}
+          </section>
+        )}
+
+        {toon.ideegeneratie && (
+          <section id="ideegeneratie" class="sectie" data-galerij aria-labelledby="ideegeneratie-titel">
+            <h2 id="ideegeneratie-titel" class="sectiekop">Ideegeneratie</h2>
+            {teksten.ideegeneratie ? alineas(teksten.ideegeneratie).map((alinea) => <p class="sectietekst">{alinea}</p>) : <Notitie tekst="tekst over de ideegeneratie aan te vullen" />}
+            {ideeBeelden.length > 0 ? (
+              <ul class="ideeraster">
+                {ideeBeelden.map((beeld, index) => (
+                  <li>
+                    <TornPaper kanteling={kantelingen[index % kantelingen.length]}>
+                      <ProjectBeeld beeld={beeld} widths={[300, 600]} sizes="(min-width: 900px) 220px, 45vw" />
+                      {beeld.bijschrift && <p class="bijschrift">{beeld.bijschrift}</p>}
+                    </TornPaper>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <Notitie tekst="schetsen en ideebeelden aan te vullen" />
+            )}
+          </section>
+        )}
+
+        {toon.technieken && (
+          <section id="technieken" class="sectie" aria-labelledby="technieken-titel">
+            <h2 id="technieken-titel" class="sectiekop">Technieken</h2>
+            {teksten.technieken ? alineas(teksten.technieken).map((alinea) => <p class="sectietekst">{alinea}</p>) : <Notitie tekst="tekst over de technieken aan te vullen" />}
+            {techniekgroepen.length > 0 ? <KaartGroepen groepen={techniekgroepen} /> : <Notitie tekst="beelden van de technieken aan te vullen" />}
+          </section>
+        )}
+
+        <section id="resultaat" class="sectie" data-galerij aria-labelledby="resultaat-titel">
+          <h2 id="resultaat-titel" class="sectiekop">Resultaat</h2>
+          {teksten.resultaat && alineas(teksten.resultaat).map((alinea) => <p class="sectietekst">{alinea}</p>)}
+          {model && (
+            <div class="resultaat-model">
+              <Model3D bestand={model.bestand} alt={model.alt} />
+            </div>
+          )}
+          <div class="resultaat-rij">
+            <div class="resultaat-hoofd">
+              <ProjectBeeld beeld={hoofdResultaat} widths={[600, 900, 1200, 1600]} sizes="(min-width: 1200px) 830px, 92vw" />
+            </div>
+          </div>
+          {andereResultaten.length > 0 && (
+            <ul class:list={['resultaatraster', { 'resultaatraster-weinig': andereResultaten.length <= 3 }]}>
+              {andereResultaten.map((beeld) => (
+                <li>
+                  <ProjectBeeld beeld={beeld} widths={[500, 800, 1100]} sizes="(min-width: 900px) 420px, 92vw" />
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        {bundel && (
+          <section id="bundel" class="sectie" aria-labelledby="bundel-titel">
+            <h2 id="bundel-titel" class="sectiekop">{bundel.titel}</h2>
+            {bundel.tekst && alineas(bundel.tekst).map((alinea) => <p class="sectietekst">{alinea}</p>)}
+            <Boekje paginas={bundel.paginas} titel={bundel.titel} />
+          </section>
+        )}
+
+        {teksten.reflectie && (
+          <section id="reflectie" class="sectie" aria-labelledby="reflectie-titel">
+            <h2 id="reflectie-titel" class="sectiekop">Reflectie</h2>
+            <div class="reflectieblok">
+              {alineas(teksten.reflectie).map((alinea) => <p>{alinea}</p>)}
+            </div>
+          </section>
+        )}
+
+        {extra && toon.extra && (
+          <section id="extra" class="sectie extra-sectie" aria-labelledby="extra-titel">
+            <h2 id="extra-titel" class="sectiekop">{extra.titel}</h2>
+            {extra.tekst && alineas(extra.tekst).map((alinea) => <p class="sectietekst">{alinea}</p>)}
+            <KaartGroepen groepen={extragroepen} />
+          </section>
+        )}
+      </div>
+    </div>
+
+    <nav class="buren" aria-label="Andere projecten">
+      {buren.map((buur) => (
+        <a class:list={['buur', `buur-${buur.soort}`]} href={pad(`projecten/${buur.project.id}/`)}>
+          <Picture
+            class="buur-beeld"
+            src={buur.project.data.cover.src}
+            alt=""
+            widths={[280]}
+            sizes="140px"
+            formats={['avif', 'webp']}
+          />
+          <span class="buur-tekst">
+            <span class="buur-richting">{buur.richting}</span>
+            <span class="buur-titel">{buur.project.data.titel}</span>
+          </span>
+        </a>
+      ))}
+    </nav>
+  </main>
+</Base>
+
+<style>
+  .projectkop,
+  .cover,
+  .proces,
+  .buren {
+    max-width: 75rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+
+  .projectkop {
+    padding-top: 1rem;
+  }
+
+  .projectlabel {
+    margin: 0 0 0.25rem;
+    color: var(--olijf-licht);
+    font-family: var(--font-hand);
+    font-size: 1.375rem;
+  }
+
+  .pillen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .pillen li {
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    background: var(--olijf);
+    color: var(--tekst-op-olijf);
+    font-size: 0.8125rem;
+  }
+
+  .intro {
+    max-width: 45rem;
+    margin: 1.25rem 0 0;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  .projectkop > :global(.notitie) {
+    margin-top: 1.25rem;
+  }
+
+  .cover {
+    margin-top: 2rem;
+  }
+
+  .cover-kader {
+    --hoek-maat: 3.5rem;
+    --hoek-ronding: 22px;
+    position: relative;
+    padding: 0.875rem;
+  }
+
+  .cover-kader::before,
+  .cover-kader::after {
+    content: '';
+    position: absolute;
+    width: var(--hoek-maat);
+    height: var(--hoek-maat);
+    border: 3px solid var(--olijf-licht);
+    pointer-events: none;
+  }
+
+  .cover-kader::before {
+    top: 0;
+    left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    border-top-left-radius: var(--hoek-ronding);
+  }
+
+  .cover-kader::after {
+    right: 0;
+    bottom: 0;
+    border-top: 0;
+    border-left: 0;
+    border-bottom-right-radius: var(--hoek-ronding);
+  }
+
+  .cover-kader :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: 14px;
+  }
+
+  .model-knop {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    padding: 0.625rem 1.25rem;
+    font-size: 1rem;
+  }
+
+  .proces {
+    padding-top: 2.5rem;
+  }
+
+  .proces-zijbalk {
+    display: contents;
+  }
+
+  .proces-inhoud {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    min-width: 0;
+    padding-top: 2.5rem;
+  }
+
+  .sectie {
+    scroll-margin-top: 4rem;
+  }
+
+  .sectietekst {
+    max-width: 42.5rem;
+    margin: 1.125rem 0 0;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .sectie > :global(.notitie) {
+    margin-top: 0.75rem;
+  }
+
+  .ideeraster {
+    columns: 2;
+    column-gap: 1rem;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ideeraster li {
+    margin-bottom: 1.25rem;
+    break-inside: avoid;
+  }
+
+  .ideeraster :global(.gescheurd-papier) {
+    padding: 1.125rem 0.75rem 1.375rem;
+  }
+
+  .ideeraster :global(img) {
+    width: 100%;
+    height: auto;
+  }
+
+  .bijschrift {
+    margin: 0.5rem 0 0;
+  }
+
+  .extra-sectie {
+    padding-top: 3rem;
+    border-top: 2px dashed color-mix(in srgb, var(--creme) 40%, transparent);
+  }
+
+  .reflectieblok p + p {
+    margin-top: 1rem;
+  }
+
+  .resultaat-rij {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.375rem;
+    margin-top: 1.75rem;
+  }
+
+  .resultaat-hoofd {
+    flex: 1 1 100%;
+    min-width: 0;
+    overflow: hidden;
+    border: 8px solid var(--olijf);
+    border-radius: 22px;
+  }
+
+  .resultaat-hoofd :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 80vh;
+    object-fit: cover;
+  }
+
+  .resultaat-model {
+    margin-top: 1.5rem;
+    background: radial-gradient(
+      closest-side,
+      rgb(from var(--olijf-licht) r g b / 0.28),
+      rgb(from var(--olijf-licht) r g b / 0.12) 50%,
+      rgb(from var(--olijf-licht) r g b / 0)
+    );
+  }
+
+  .resultaatraster {
+    columns: 2;
+    column-gap: 0.875rem;
+    margin: 1.375rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .resultaatraster li {
+    margin-bottom: 0.875rem;
+    break-inside: avoid;
+  }
+
+  .resultaatraster :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 18px;
+  }
+
+  .resultaatraster-weinig {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 0.875rem;
+    align-items: start;
+  }
+
+  .resultaatraster-weinig li {
+    margin-bottom: 0;
+  }
+
+  .resultaatraster-weinig :global(img) {
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+
+  .reflectieblok {
+    max-width: 42.5rem;
+    margin-top: 1.375rem;
+    padding: 1.625rem 1.875rem;
+    border-radius: 22px;
+    background: var(--olijf);
+    color: var(--tekst-op-olijf);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  .reflectieblok p {
+    margin: 0;
+  }
+
+  .buren {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  .buur {
+    display: flex;
+    flex: 1 1 18.75rem;
+    gap: 1.25rem;
+    align-items: center;
+    padding: 0.875rem;
+    border-radius: 22px;
+    text-decoration: none;
+  }
+
+  .buur-vorige {
+    border: 2px solid var(--creme);
+  }
+
+  .buur-volgende {
+    flex-direction: row-reverse;
+    background: var(--creme);
+    color: var(--inkt);
+    text-align: right;
+  }
+
+  .buur :global(.buur-beeld),
+  .buur :global(.buur-beeld img) {
+    flex: none;
+    width: 7rem;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: 14px;
+  }
+
+  .buur-tekst {
+    display: grid;
+    flex: 1;
+  }
+
+  .buur-richting {
+    color: var(--olijf-licht);
+    font-size: 0.875rem;
+  }
+
+  .buur-volgende .buur-richting {
+    color: var(--bordeaux);
+  }
+
+  .buur-titel {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 800;
+    line-height: 1.15;
+  }
+
+  .buur-volgende .buur-titel {
+    color: var(--bordeaux);
+  }
+
+  .buur:hover .buur-titel {
+    text-decoration: underline;
+  }
+
+  @media (min-width: 700px) {
+    .projectkop,
+    .cover,
+    .proces,
+    .buren {
+      padding-inline: 2rem;
+    }
+
+    .projectkop {
+      padding-top: 1.875rem;
+    }
+
+    .projectlabel {
+      font-size: 1.75rem;
+    }
+
+    .pillen {
+      gap: 0.625rem;
+      margin-top: 1.75rem;
+    }
+
+    .pillen li {
+      padding: 0.375rem 0.875rem;
+      font-size: 0.875rem;
+    }
+
+    .intro {
+      margin-top: 1.5rem;
+      font-size: 1.25rem;
+    }
+
+    .cover {
+      margin-top: 3rem;
+    }
+
+    .cover-kader {
+      --hoek-maat: 5rem;
+      --hoek-ronding: 28px;
+      padding: 1.125rem;
+    }
+
+    .cover-kader :global(img) {
+      border-radius: 18px;
+    }
+
+    .model-knop {
+      right: 2.5rem;
+      bottom: 2.5rem;
+      padding: 0.875rem 1.625rem;
+      font-size: 1.125rem;
+    }
+
+    .sectietekst {
+      font-size: 1.125rem;
+    }
+
+    .ideeraster {
+      columns: 3;
+      column-gap: 1.75rem;
+    }
+
+    .ideeraster li {
+      margin-bottom: 1.75rem;
+    }
+
+    .resultaatraster {
+      columns: 3;
+      column-gap: 1.375rem;
+    }
+
+    .resultaatraster li {
+      margin-bottom: 1.375rem;
+    }
+
+    .resultaatraster-weinig {
+      gap: 1.375rem;
+    }
+
+    .resultaatraster-weinig li {
+      margin-bottom: 0;
+    }
+
+    .resultaatraster :global(img) {
+      border-radius: 22px;
+    }
+
+    .ideeraster :global(.gescheurd-papier) {
+      padding: 1.75rem 1.375rem 2rem;
+    }
+
+    .reflectieblok {
+      font-size: 1.125rem;
+    }
+
+    .buren {
+      padding-top: 6.875rem;
+      padding-bottom: 6.25rem;
+    }
+
+    .buur :global(.buur-beeld),
+    .buur :global(.buur-beeld img) {
+      width: 8.75rem;
+    }
+
+    .buur-titel {
+      font-size: 1.625rem;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .proces {
+      display: flex;
+      gap: 4rem;
+      padding-top: 5.625rem;
+    }
+
+    .proces-zijbalk {
+      display: block;
+      flex: 0 0 13.75rem;
+    }
+
+    .proces-inhoud {
+      flex: 1 1 37.5rem;
+      gap: 5.625rem;
+      padding-top: 0;
+    }
+
+    .sectie {
+      scroll-margin-top: 1.5rem;
+    }
+  }
+</style>

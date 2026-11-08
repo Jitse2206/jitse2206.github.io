@@ -1,0 +1,31 @@
+---
+interface Props {
+  tekst?: string;
+  op?: 'bordeaux' | 'creme' | 'olijf';
+}
+
+const { tekst = 'aan te vullen', op = 'bordeaux' } = Astro.props;
+---
+
+<p class:list={['notitie', `notitie-op-${op}`]}>{tekst}</p>
+
+<style>
+  .notitie {
+    margin: 0;
+    font-family: var(--font-hand);
+    font-size: 1.375rem;
+    line-height: 1.3;
+  }
+
+  .notitie-op-bordeaux {
+    color: var(--olijf-licht);
+  }
+
+  .notitie-op-olijf {
+    color: var(--tekst-op-olijf);
+  }
+
+  .notitie-op-creme {
+    color: var(--bordeaux);
+  }
+</style>

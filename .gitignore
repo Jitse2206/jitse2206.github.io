@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+CLAUDE.md
+PROMPT.md
+TODO.md
+MANIFEST.md
+design/
+bronnen-niet-gebruikt/

@@ -1,0 +1,76 @@
+---
+interface Props {
+  items: string[];
+  class?: string;
+}
+
+const { items, class: className } = Astro.props;
+const herhalingen = [0, 1];
+---
+
+<div class:list={['lichtkrant', className]}>
+  <p class="visueel-verborgen">{items.join(', ')}</p>
+  <div class="lichtkrant-baan" aria-hidden="true">
+    {herhalingen.map(() => (
+      <ul class="lichtkrant-groep">
+        {items.map((item) => (
+          <li>
+            <span>{item}</span>
+            <span class="scheiding">✳</span>
+          </li>
+        ))}
+      </ul>
+    ))}
+  </div>
+</div>
+
+<style>
+  .lichtkrant {
+    overflow: hidden;
+    padding-block: 0.625rem;
+    background: var(--olijf);
+    color: var(--tekst-op-olijf);
+    font-size: 1.25rem;
+    white-space: nowrap;
+  }
+
+  .lichtkrant-baan {
+    display: flex;
+    width: max-content;
+    animation: doorschuiven 30s linear infinite;
+  }
+
+  .lichtkrant-groep {
+    display: flex;
+    margin: 0;
+    padding: 0 0.6em 0 0;
+    list-style: none;
+  }
+
+  .lichtkrant-groep li {
+    display: flex;
+  }
+
+  .scheiding {
+    padding-inline: 0.6em;
+  }
+
+  @keyframes doorschuiven {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (min-width: 700px) {
+    .lichtkrant {
+      padding-block: 1rem;
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lichtkrant-baan {
+      animation: none;
+    }
+  }
+</style>

@@ -1,0 +1,419 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import DisplayTitle from '../components/DisplayTitle.astro';
+import Timeline from '../components/Timeline.astro';
+import TornPaper from '../components/TornPaper.astro';
+import Notitie from '../components/Notitie.astro';
+import { contact, educatie, intro, vaardigheden, werkervaring } from '../data/cv';
+import type { CvItem } from '../data/cv';
+import { pad } from '../utils/pad';
+import portret from '../assets/jitse/jitse-uitgeknipt.png';
+
+const naarTijdlijn = (items: CvItem[]) =>
+  items.map((item) => ({ label: item.periode, titel: item.titel, details: item.details }));
+
+const kantelingen = [-2, 1.5, -1];
+---
+
+<Base title="CV & Contact" description="Cv en contactgegevens van Jitse Van Laer, Industrial Designer.">
+  <main id="inhoud">
+    <header class="cvkop">
+      <div class="cvkop-tekst">
+        <DisplayTitle titel="CV &" omlijning="Contact" max={130} />
+        <p class="introblok intro-breed">{intro}</p>
+      </div>
+      <div class="cvportret">
+        <div class="boog" aria-hidden="true"></div>
+        <Picture
+          pictureAttributes={{ class: 'portret' }}
+          src={portret}
+          alt="Portret van Jitse Van Laer"
+          widths={[300, 400, 600, 800]}
+          sizes="(min-width: 900px) 400px, 300px"
+          formats={['avif', 'webp']}
+          loading="eager"
+        />
+        <p class="cvnaam">Jitse Van Laer</p>
+      </div>
+    </header>
+
+    <section class="contactbalk" aria-label="Contact">
+      <div class="contactbalk-inhoud">
+        <ul class="contactlijst">
+          <li>
+            {contact.email ? <a class="email" href={`mailto:${contact.email}`}>{contact.email}</a> : <Notitie tekst="e-mailadres aan te vullen" op="creme" />}
+          </li>
+          <li>
+            {contact.telefoon ? <a href={`tel:${contact.telefoon.replace(/\s/g, '')}`}>{contact.telefoon}</a> : <Notitie tekst="telefoon aan te vullen" op="creme" />}
+          </li>
+          <li>
+            {contact.linkedin ? <a href={contact.linkedin} rel="me noopener">LinkedIn</a> : <Notitie tekst="LinkedIn aan te vullen" op="creme" />}
+          </li>
+        </ul>
+        <a class="knop knop-bordeaux" href={pad('cv-jitse-van-laer.pdf')} download>Download cv (PDF)</a>
+      </div>
+    </section>
+
+    <div class="intro-smal-houder">
+      <p class="introblok intro-smal">{intro}</p>
+    </div>
+
+    <div class="cvkolommen">
+      <section aria-labelledby="werkervaring-titel">
+        <h2 id="werkervaring-titel" class="sectiekop">Werkervaring</h2>
+        <Timeline items={naarTijdlijn(werkervaring)} />
+      </section>
+      <section aria-labelledby="educatie-titel">
+        <h2 id="educatie-titel" class="sectiekop">Educatie</h2>
+        <Timeline items={naarTijdlijn(educatie)} />
+      </section>
+    </div>
+
+    <section class="meebreng" aria-labelledby="meebreng-titel">
+      <h2 id="meebreng-titel" class="sectiekop">Wat ik meebreng</h2>
+      <ul class="papieren">
+        {vaardigheden.map((groepen, index) => (
+          <li class:list={['papier', `papier-${index + 1}`]}>
+            <TornPaper kanteling={kantelingen[index % kantelingen.length]}>
+              {groepen.map((groep) => (
+                <div class="vaardigheidgroep">
+                  <h3>{groep.titel}</h3>
+                  <ul class:list={['vaardigheden', { 'twee-kolommen': groep.items.length > 6 }]}>
+                    {groep.items.map((item) => <li>{item}</li>)}
+                  </ul>
+                </div>
+              ))}
+            </TornPaper>
+          </li>
+        ))}
+      </ul>
+      <p class="naar-boven"><a href="#boven">Naar boven</a></p>
+    </section>
+  </main>
+</Base>
+
+<style>
+  .cvkop,
+  .cvkolommen,
+  .meebreng {
+    max-width: 75rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+
+  .cvkop {
+    padding-top: 1.25rem;
+  }
+
+  .introblok {
+    margin: 0;
+    padding-left: 1.125rem;
+    border-left: 4px solid var(--olijf-licht);
+    color: var(--creme);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .intro-breed {
+    display: none;
+  }
+
+  .intro-smal-houder {
+    padding: 1.875rem 1rem 0;
+  }
+
+  .cvportret {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    height: 23.75rem;
+    margin-top: 1.125rem;
+  }
+
+  .boog {
+    position: absolute;
+    right: 1.875rem;
+    bottom: 0;
+    left: 1.875rem;
+    height: 80%;
+    border-radius: 999px 999px 0 0;
+    background: var(--creme);
+  }
+
+  .cvportret :global(.portret) {
+    position: relative;
+    align-self: flex-end;
+    width: 18.75rem;
+  }
+
+  .cvportret :global(.portret) img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .cvnaam {
+    position: absolute;
+    bottom: 22%;
+    left: 50%;
+    z-index: 1;
+    margin: 0;
+    padding: 0.35em 0.8em;
+    border-radius: 999px;
+    background: var(--bordeaux);
+    color: var(--creme);
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 5.6vw, 2.25rem);
+    font-weight: 900;
+    font-stretch: 125%;
+    line-height: 1;
+    white-space: nowrap;
+    transform: translateX(-50%);
+  }
+
+  .contactbalk {
+    background: var(--creme);
+    color: var(--inkt);
+  }
+
+  .contactbalk-inhoud {
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+    max-width: 75rem;
+    margin: 0 auto;
+    padding: 1.375rem 1rem;
+  }
+
+  .contactlijst {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    font-size: 1.0625rem;
+    list-style: none;
+  }
+
+  .contactlijst a {
+    color: var(--inkt);
+    overflow-wrap: anywhere;
+  }
+
+  .contactlijst a.email {
+    color: var(--bordeaux);
+    font-weight: 700;
+  }
+
+  .contactlijst a:hover {
+    color: var(--bordeaux);
+  }
+
+  .contactlijst a:focus-visible,
+  .contactbalk .knop:focus-visible {
+    outline-color: var(--bordeaux);
+  }
+
+  .cvkolommen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.75rem 3.75rem;
+    padding-top: 2.75rem;
+  }
+
+  .cvkolommen section {
+    flex: 1 1 28.75rem;
+    min-width: 0;
+  }
+
+  .cvkolommen :global(.tijdlijn) {
+    margin-top: 1.5rem;
+  }
+
+  .meebreng {
+    padding-top: 3.125rem;
+    padding-bottom: 4.375rem;
+  }
+
+  .papieren {
+    display: flex;
+    flex-direction: column;
+    gap: 1.375rem;
+    margin: 1.625rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .papieren :global(.gescheurd-papier) {
+    padding: 1.75rem 1.375rem 1.875rem;
+  }
+
+  .vaardigheidgroep + .vaardigheidgroep {
+    margin-top: 1.125rem;
+  }
+
+  .vaardigheidgroep h3 {
+    margin: 0;
+    font-family: var(--font-hand);
+    font-size: 1.625rem;
+    font-weight: 400;
+    text-decoration: underline;
+  }
+
+  .vaardigheden {
+    margin: 0.375rem 0 0;
+    padding: 0;
+    font-size: 1.25rem;
+    line-height: 1.55;
+    list-style: none;
+  }
+
+  .vaardigheden li {
+    padding-left: 0.75em;
+    text-indent: -0.75em;
+    break-inside: avoid;
+  }
+
+  .vaardigheden li::before {
+    content: '•\00a0';
+  }
+
+  .naar-boven {
+    margin: 4.375rem 0 0;
+    font-size: 0.9375rem;
+    text-align: center;
+  }
+
+  .naar-boven a:hover {
+    color: var(--olijf-licht);
+  }
+
+  @media (min-width: 700px) {
+    .cvkop,
+    .cvkolommen,
+    .meebreng {
+      padding-inline: 2rem;
+    }
+
+    .contactbalk-inhoud {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1.5rem 3rem;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2.25rem 2rem;
+    }
+
+    .contactlijst {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1.25rem 2.75rem;
+      font-size: 1.25rem;
+    }
+
+    .cvkolommen {
+      padding-top: 5rem;
+    }
+
+    .cvkolommen :global(.tijdlijn) {
+      margin-top: 2.125rem;
+    }
+
+    .meebreng {
+      padding-top: 3.75rem;
+      padding-bottom: 6.875rem;
+    }
+
+    .papieren {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: flex-start;
+      margin-top: 2.25rem;
+    }
+
+    .papier-1 {
+      flex: 1 1 18.75rem;
+    }
+
+    .papier-2 {
+      flex: 1 1 21.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .papier-3 {
+      flex: 1 1 15rem;
+    }
+
+    .papieren :global(.gescheurd-papier) {
+      padding: 2.125rem 1.875rem 2.375rem;
+    }
+
+    .vaardigheidgroep h3 {
+      font-size: 2rem;
+    }
+
+    .vaardigheden {
+      margin-top: 0.625rem;
+      font-size: 1.4375rem;
+      line-height: 1.6;
+    }
+
+    .twee-kolommen {
+      columns: 2;
+      column-gap: 1.5rem;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .cvkop {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      align-items: flex-end;
+    }
+
+    .cvkop-tekst {
+      flex: 999 1 35rem;
+      min-width: 0;
+    }
+
+    .intro-breed {
+      display: block;
+      max-width: 38.75rem;
+      margin-top: 2.125rem;
+      margin-bottom: 2.5rem;
+      padding-left: 1.5rem;
+      font-size: 1.1875rem;
+    }
+
+    .intro-smal-houder {
+      display: none;
+    }
+
+    .cvportret {
+      flex: 1 1 21.25rem;
+      justify-content: flex-end;
+      height: 30rem;
+      margin-top: 0;
+    }
+
+    .boog {
+      right: 0;
+      left: 6%;
+      height: 82%;
+    }
+
+    .cvportret :global(.portret) {
+      width: 100%;
+      max-width: 25rem;
+    }
+
+    .cvnaam {
+      right: 38%;
+      left: auto;
+      transform: none;
+    }
+  }
+</style>

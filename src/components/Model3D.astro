@@ -1,0 +1,79 @@
+---
+import { pad } from '../utils/pad';
+
+interface Props {
+  bestand: string;
+  alt: string;
+}
+
+const { bestand, alt } = Astro.props;
+---
+
+<div class="model-3d" data-model-3d>
+  <model-viewer
+    src={pad(`modellen/${bestand}`)}
+    alt={alt}
+    camera-controls
+    auto-rotate
+    auto-rotate-delay="0"
+    rotation-per-second="18deg"
+    touch-action="pan-y"
+    shadow-intensity="0.6"
+  ></model-viewer>
+  <p class="model-hint">Sleep om het model te draaien</p>
+</div>
+
+<script>
+  import meshoptDecoder from '../scripts/meshopt-decoder.ts?worker&url';
+
+  const modellen = document.querySelectorAll('[data-model-3d]');
+  const instellingen = window as typeof window & { ModelViewerElement?: { meshoptDecoderLocation?: string } };
+
+  instellingen.ModelViewerElement = { ...instellingen.ModelViewerElement, meshoptDecoderLocation: meshoptDecoder };
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    modellen.forEach((model) => model.querySelector('model-viewer')?.removeAttribute('auto-rotate'));
+  }
+
+  if (modellen.length > 0) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          observer.disconnect();
+          import('@google/model-viewer');
+        }
+      },
+      { rootMargin: '300px' }
+    );
+
+    modellen.forEach((model) => observer.observe(model));
+  }
+</script>
+
+<style>
+  .model-3d {
+    color: var(--olijf-licht);
+  }
+
+  model-viewer {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    max-height: 80vh;
+  }
+
+  .model-hint {
+    margin: 0;
+    padding: 0.5rem 1rem 0;
+    font-family: var(--font-hand);
+    font-size: 1.25rem;
+    text-align: center;
+  }
+
+  @media (max-width: 699px) {
+    model-viewer {
+      aspect-ratio: 1;
+    }
+  }
+</style>

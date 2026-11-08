@@ -1,0 +1,164 @@
+<dialog class="lightbox" aria-label="Vergrote foto">
+  <button class="lightbox-knop lightbox-sluit" type="button" aria-label="Sluiten"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg></button>
+  <button class="lightbox-knop lightbox-vorige" type="button" aria-label="Vorige foto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg></button>
+  <figure class="lightbox-polaroid">
+    <img class="lightbox-foto" alt="" />
+    <figcaption class="lightbox-onderschrift"></figcaption>
+  </figure>
+  <button class="lightbox-knop lightbox-volgende" type="button" aria-label="Volgende foto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg></button>
+</dialog>
+
+<script>
+  const dialoog = document.querySelector<HTMLDialogElement>('.lightbox');
+
+  if (dialoog) {
+    const foto = dialoog.querySelector<HTMLImageElement>('.lightbox-foto')!;
+    const onderschrift = dialoog.querySelector<HTMLElement>('.lightbox-onderschrift')!;
+    let reeks: HTMLButtonElement[] = [];
+    let huidige = 0;
+    let startX = 0;
+
+    const toon = (index: number) => {
+      huidige = (index + reeks.length) % reeks.length;
+      const knop = reeks[huidige];
+      foto.src = knop.dataset.vergroot ?? '';
+      foto.alt = knop.dataset.alt ?? '';
+      onderschrift.textContent = knop.dataset.alt ?? '';
+    };
+
+    document.addEventListener('click', (event) => {
+      const knop = (event.target as Element).closest<HTMLButtonElement>('[data-vergroot]');
+      if (!knop) return;
+      const galerij = knop.closest('[data-galerij]') ?? document;
+      reeks = [...galerij.querySelectorAll<HTMLButtonElement>('[data-vergroot]')];
+      dialoog.classList.toggle('lightbox-enkel', reeks.length < 2);
+      toon(reeks.indexOf(knop));
+      dialoog.showModal();
+    });
+
+    dialoog.querySelector('.lightbox-sluit')?.addEventListener('click', () => dialoog.close());
+    dialoog.querySelector('.lightbox-vorige')?.addEventListener('click', () => toon(huidige - 1));
+    dialoog.querySelector('.lightbox-volgende')?.addEventListener('click', () => toon(huidige + 1));
+    dialoog.addEventListener('click', (event) => {
+      if (event.target === dialoog) dialoog.close();
+    });
+    dialoog.addEventListener('keydown', (event) => {
+      if (reeks.length < 2) return;
+      if (event.key === 'ArrowLeft') toon(huidige - 1);
+      if (event.key === 'ArrowRight') toon(huidige + 1);
+    });
+    dialoog.addEventListener('touchstart', (event) => (startX = event.touches[0].clientX), { passive: true });
+    dialoog.addEventListener('touchend', (event) => {
+      const verschil = event.changedTouches[0].clientX - startX;
+      if (reeks.length > 1 && Math.abs(verschil) > 50) toon(huidige + (verschil < 0 ? 1 : -1));
+    });
+  }
+</script>
+
+<style>
+  .lightbox {
+    width: 100vw;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .lightbox[open] {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .lightbox::backdrop {
+    background: color-mix(in srgb, var(--bordeaux) 88%, transparent);
+    backdrop-filter: blur(6px);
+  }
+
+  .lightbox-polaroid {
+    display: grid;
+    justify-items: center;
+    gap: 0.75rem;
+    max-width: calc(100vw - 10rem);
+    margin: 0;
+    padding: 0.875rem 0.875rem 1.25rem;
+    background: var(--creme);
+    box-shadow: 0 30px 60px -20px color-mix(in srgb, var(--inkt) 80%, transparent);
+    transform: rotate(-1.5deg);
+  }
+
+  .lightbox-foto {
+    max-width: 100%;
+    max-height: 72dvh;
+  }
+
+  .lightbox-onderschrift {
+    max-width: 40rem;
+    color: var(--inkt);
+    font-family: var(--font-hand);
+    font-size: 1.375rem;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  .lightbox-knop {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--creme);
+    color: var(--bordeaux);
+    cursor: pointer;
+  }
+
+  .lightbox-knop svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .lightbox-knop:hover {
+    background: var(--olijf-licht);
+    color: var(--inkt);
+  }
+
+  .lightbox-sluit {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .lightbox-enkel .lightbox-vorige,
+  .lightbox-enkel .lightbox-volgende {
+    visibility: hidden;
+  }
+
+  @media (max-width: 699px) {
+    .lightbox-polaroid {
+      max-width: 100%;
+      padding: 0.5rem 0.5rem 0.875rem;
+    }
+
+    .lightbox-onderschrift {
+      font-size: 1.125rem;
+    }
+
+    .lightbox-vorige,
+    .lightbox-volgende {
+      display: none;
+    }
+  }
+</style>

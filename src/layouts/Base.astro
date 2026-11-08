@@ -1,0 +1,73 @@
+---
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource/courier-prime/400.css';
+import '@fontsource/courier-prime/700.css';
+import '@fontsource/patrick-hand/400.css';
+import { getImage } from 'astro:assets';
+import '../styles/tokens.css';
+import deelbeeld from '../assets/jitse/deelbeeld.jpg';
+import { pad } from '../utils/pad';
+import Nav from '../components/Nav.astro';
+import Lightbox from '../components/Lightbox.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  terug?: { href: string; label: string };
+}
+
+const {
+  title,
+  description = 'Portfolio van Jitse Van Laer, Industrial Designer en student industrieel ontwerpen aan UGent campus Kortrijk: prototypes, CAD en renders.',
+  terug
+} = Astro.props;
+
+const volledigeTitel = `${title} | Jitse Van Laer`;
+const canoniek = new URL(Astro.url.pathname, Astro.site);
+const geoptimaliseerdDeelbeeld = await getImage({ src: deelbeeld, format: 'jpeg', width: 1200 });
+const deelbeeldUrl = new URL(geoptimaliseerdDeelbeeld.src, Astro.site);
+const inhoudsbeleid = [
+  "default-src 'self'",
+  "script-src 'self' 'wasm-unsafe-eval'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob:",
+  "font-src 'self'",
+  "connect-src 'self' blob: data:",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'none'"
+].join('; ');
+---
+
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content={inhoudsbeleid} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#8B2C3C" />
+    <title>{volledigeTitel}</title>
+    <link rel="canonical" href={canoniek} />
+    <link rel="icon" href={pad('favicon.svg')} type="image/svg+xml" />
+    <link rel="sitemap" href={pad('sitemap-index.xml')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="nl_BE" />
+    <meta property="og:site_name" content="Jitse Van Laer" />
+    <meta property="og:title" content={volledigeTitel} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canoniek} />
+    <meta property="og:image" content={deelbeeldUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Jitse Van Laer, Industrial Designer" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <a class="skiplink" href="#inhoud">Naar de inhoud</a>
+    <Nav terug={terug} />
+    <slot />
+    <Lightbox />
+  </body>
+</html>

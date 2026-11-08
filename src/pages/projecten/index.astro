@@ -1,0 +1,256 @@
+---
+import Base from '../../layouts/Base.astro';
+import DisplayTitle from '../../components/DisplayTitle.astro';
+import FilterPills from '../../components/FilterPills.astro';
+import Marquee from '../../components/Marquee.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import ProjectBeeld from '../../components/ProjectBeeld.astro';
+import TornPaper from '../../components/TornPaper.astro';
+import { atelier, atelierTekst } from '../../data/atelier';
+import { metHoofdletter, projectenOpVolgorde } from '../../utils/projecten';
+
+const projecten = await projectenOpVolgorde();
+const filterVolgorde = ['prototyping', 'CAD', 'renders', 'groepswerk'];
+const gebruikteTags = new Set(projecten.flatMap((project) => project.data.tags));
+const tags = [
+  ...filterVolgorde.filter((tag) => gebruikteTags.has(tag)),
+  ...[...gebruikteTags].filter((tag) => !filterVolgorde.includes(tag)).sort((a, b) => a.localeCompare(b, 'nl'))
+];
+const filters = [
+  ...tags.map((tag) => ({ waarde: tag, label: metHoofdletter(tag) })),
+  { waarde: 'atelier', label: 'Atelier' }
+];
+const kantelingen = [-3, 2, -1];
+---
+
+<Base title="Projecten" description="Projecten van Jitse Van Laer, Industrial Designer.">
+  <main id="inhoud">
+    <header class="kop">
+      <DisplayTitle titel="Projecten" echo max={150} />
+      <div class="filterrij">
+        <FilterPills filters={filters} doel="projectoverzicht" />
+        <p class="teller">{projecten.length} projecten · 1 atelier</p>
+      </div>
+      <p class="veeghint" aria-hidden="true">veeg voor meer filters →</p>
+    </header>
+
+    <Marquee class="projecten-lichtkrant" items={['frezen', 'spuitgieten', 'resincasten', '3D printen', 'solid modelling', 'surface modelling', 'renderen']} />
+
+    <div id="projectoverzicht" class="projectoverzicht">
+      <section class="kaartenraster" aria-label="Alle projecten">
+        {projecten.map((project, index) => <ProjectCard project={project} eager={index < 3} />)}
+      </section>
+
+      <section class="atelier" aria-labelledby="atelier-titel" data-tags="atelier">
+        <div class="atelier-tekst">
+          <h2 id="atelier-titel" class="atelier-titel">Atelier</h2>
+          <p>{atelierTekst}</p>
+        </div>
+        <ul class="atelier-papieren" data-galerij>
+          {atelier.map((beeld, index) => (
+            <li>
+              <TornPaper kanteling={kantelingen[index % kantelingen.length]}>
+                <ProjectBeeld beeld={beeld} widths={[300, 600]} sizes="(min-width: 900px) 220px, 170px" />
+                <p class="bijschrift">{beeld.bijschrift}</p>
+              </TornPaper>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .kop {
+    max-width: 75rem;
+    margin: 0 auto;
+    padding: 1.25rem 1rem 0;
+  }
+
+  .filterrij {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+  }
+
+  .filterrij :global(.filterpillen) {
+    flex: 1 1 calc(100% + 2rem);
+    min-width: 0;
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+  }
+
+  .teller {
+    display: none;
+    margin: 0;
+    color: var(--olijf-licht);
+  }
+
+  .veeghint {
+    margin: 0.25rem 0 0;
+    color: var(--olijf-licht);
+    font-size: 0.8125rem;
+  }
+
+  .kop + :global(.projecten-lichtkrant) {
+    display: none;
+  }
+
+  .kaartenraster {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.375rem;
+    max-width: 75rem;
+    margin: 0 auto;
+    padding: 1.75rem 1rem 0;
+  }
+
+  .projectoverzicht {
+    padding-bottom: 4.375rem;
+  }
+
+  .atelier {
+    max-width: 75rem;
+    margin: 0 auto;
+    padding: 3.75rem 1rem 0;
+  }
+
+  .atelier[hidden] {
+    display: none;
+  }
+
+  .atelier-titel {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 900;
+    font-stretch: 125%;
+    line-height: 0.95;
+  }
+
+  .atelier-tekst p {
+    max-width: 26.25rem;
+    margin: 0.5rem 0 0;
+    font-size: 0.9375rem;
+  }
+
+  .atelier-papieren {
+    display: flex;
+    gap: 0.875rem;
+    margin: 1.25rem -1rem 0;
+    padding: 0.375rem 1rem;
+    overflow-x: auto;
+    list-style: none;
+  }
+
+  .atelier-papieren li {
+    flex: 0 0 10.625rem;
+  }
+
+  .atelier-papieren :global(.gescheurd-papier) {
+    padding: 1.375rem 0.875rem 1.625rem;
+  }
+
+  .bijschrift {
+    margin: 0.375rem 0 0;
+    font-size: 1.25rem;
+  }
+
+  @media (min-width: 700px) {
+    .kop {
+      padding: 1.25rem 2rem 0;
+    }
+
+    .filterrij {
+      margin: 1.875rem 0 0;
+      padding: 0;
+    }
+
+    .filterrij :global(.filterpillen) {
+      flex: 0 1 auto;
+      margin: 0;
+      padding-inline: 0;
+    }
+
+    .teller {
+      display: block;
+    }
+
+    .veeghint {
+      display: none;
+    }
+
+    .kop + :global(.projecten-lichtkrant) {
+      display: block;
+      margin-top: 2.5rem;
+    }
+
+    .kop + :global(.projecten-lichtkrant) {
+      font-size: 1.5rem;
+      padding-block: 0.75rem;
+    }
+
+    .kaartenraster {
+      grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+      gap: 1.75rem;
+      padding: 3.5rem 2rem 0;
+    }
+
+    .atelier {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      align-items: center;
+      padding: 5.625rem 2rem 0;
+    }
+
+    .projectoverzicht {
+      padding-bottom: 6.25rem;
+    }
+
+    .atelier-tekst {
+      flex: 1 1 22.5rem;
+      min-width: 0;
+    }
+
+    .atelier-titel {
+      font-size: 4.5rem;
+    }
+
+    .atelier-tekst p {
+      margin-top: 0.875rem;
+      font-size: 1.125rem;
+    }
+
+    .atelier-papieren {
+      flex: 2 1 35rem;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      overflow: visible;
+    }
+
+    .atelier-papieren li {
+      flex: 1 1 10rem;
+    }
+
+    .atelier-papieren li:nth-child(2) {
+      margin-top: 1.875rem;
+    }
+
+    .atelier-papieren :global(.gescheurd-papier) {
+      padding: 1.625rem 1.125rem 1.875rem;
+    }
+
+    .bijschrift {
+      margin-top: 0.5rem;
+      font-size: 1.375rem;
+    }
+  }
+</style>

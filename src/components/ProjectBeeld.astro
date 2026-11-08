@@ -1,0 +1,33 @@
+---
+import type { ImageMetadata } from 'astro';
+import { getImage, Picture } from 'astro:assets';
+
+interface Props {
+  beeld: {
+    src: ImageMetadata;
+    alt: string;
+  };
+  widths: number[];
+  sizes: string;
+  class?: string;
+  eager?: boolean;
+}
+
+const { beeld, widths, sizes, class: className, eager = false } = Astro.props;
+const bruikbareBreedtes = widths.filter((breedte) => breedte <= beeld.src.width);
+const breedtes = bruikbareBreedtes.length > 0 ? bruikbareBreedtes : [beeld.src.width];
+const groot = await getImage({ src: beeld.src, width: Math.min(1800, beeld.src.width), format: 'webp' });
+---
+
+<button class="vergroot" type="button" data-vergroot={groot.src} data-alt={beeld.alt} aria-label={`Vergroot: ${beeld.alt}`}>
+  <Picture
+    class={className}
+    src={beeld.src}
+    alt={beeld.alt}
+    widths={breedtes}
+    sizes={sizes}
+    formats={['avif', 'webp']}
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : 'auto'}
+  />
+</button>

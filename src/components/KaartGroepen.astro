@@ -1,0 +1,167 @@
+---
+import ProjectBeeld from './ProjectBeeld.astro';
+import Notitie from './Notitie.astro';
+import type { KaartGroep } from '../utils/projecten';
+
+interface Props {
+  groepen: KaartGroep[];
+}
+
+const { groepen } = Astro.props;
+---
+
+<ul class="kaartgroepen">
+  {groepen.map(({ titel, tekst, hoofdbeeld, overigeBeelden }) => (
+    <li class="kaartgroep" data-galerij>
+      {hoofdbeeld && (
+        <div class:list={['collage', { 'collage-vol': overigeBeelden.length > 6 }]}>
+          <div class="polaroid polaroid-hoofd">
+            <ProjectBeeld beeld={hoofdbeeld} widths={[400, 800, 1200]} sizes="(min-width: 900px) 360px, 62vw" />
+          </div>
+          {overigeBeelden.map((beeld) => (
+            <div class="polaroid">
+              <ProjectBeeld beeld={beeld} widths={[200, 400]} sizes="(min-width: 900px) 160px, 30vw" />
+            </div>
+          ))}
+        </div>
+      )}
+      <div class="kaartgroep-inhoud">
+        <h3 class="kaartgroep-titel">{titel}</h3>
+        {tekst ? <p class="kaartgroep-tekst">{tekst}</p> : <Notitie tekst="tekst volgt" />}
+      </div>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .kaartgroepen {
+    display: grid;
+    gap: 3.5rem;
+    margin: 2.25rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .kaartgroep {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .collage {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0.5rem 0.75rem 0;
+  }
+
+  .polaroid {
+    position: relative;
+    z-index: 1;
+    width: 30%;
+    margin: -1.25rem -0.375rem 0;
+    padding: 0.375rem 0.375rem 1.375rem;
+    background: var(--creme);
+    box-shadow: 0 14px 24px -14px color-mix(in srgb, var(--inkt) 75%, transparent);
+    transform: rotate(var(--kanteling, -3deg));
+  }
+
+  .collage-vol .polaroid {
+    width: 24%;
+  }
+
+  .polaroid:nth-child(5n + 2) {
+    --kanteling: -6deg;
+  }
+
+  .polaroid:nth-child(5n + 3) {
+    --kanteling: 4deg;
+  }
+
+  .polaroid:nth-child(5n + 4) {
+    --kanteling: -2deg;
+  }
+
+  .polaroid:nth-child(5n + 5) {
+    --kanteling: 6deg;
+  }
+
+  .polaroid:nth-child(5n + 6) {
+    --kanteling: -4deg;
+  }
+
+  .polaroid-hoofd {
+    --kanteling: 2deg;
+    z-index: 0;
+    width: 62%;
+    margin: 0 19% 0;
+    padding: 0.625rem 0.625rem 2.25rem;
+  }
+
+  .collage-vol .polaroid-hoofd {
+    width: 62%;
+  }
+
+  .polaroid :global(picture) {
+    display: contents;
+  }
+
+  .polaroid :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .polaroid-hoofd :global(img) {
+    aspect-ratio: auto;
+    max-height: 26rem;
+    object-fit: cover;
+  }
+
+  .kaartgroep-titel {
+    margin: 0 0 0.375rem;
+    color: var(--creme);
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 800;
+  }
+
+  .kaartgroep-tekst {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .polaroid {
+      transition: transform 0.25s ease;
+    }
+
+    .polaroid:hover {
+      z-index: 2;
+      transform: rotate(0deg) scale(1.04);
+    }
+  }
+
+  @media (min-width: 700px) {
+    .kaartgroepen {
+      gap: 4.5rem;
+    }
+
+    .kaartgroep {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .kaartgroep:nth-child(even) .collage {
+      order: 1;
+    }
+
+    .kaartgroep-titel {
+      font-size: 1.625rem;
+    }
+  }
+</style>

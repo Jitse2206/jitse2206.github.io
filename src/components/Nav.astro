@@ -1,0 +1,96 @@
+---
+import { huidigePad, pad } from '../utils/pad';
+
+interface Props {
+  terug?: { href: string; label: string };
+}
+
+const { terug } = Astro.props;
+const currentPath = huidigePad(Astro.url);
+const links = [
+  { label: 'Home', pagina: '' },
+  { label: 'Projecten', pagina: 'projecten/' },
+  { label: 'CV & Contact', pagina: 'cv-contact/' }
+];
+---
+
+<nav id="boven" class:list={['site-nav', { 'met-terug': terug }]} aria-label="Hoofdnavigatie">
+  {terug && <a class="terug" href={terug.href}>← {terug.label}</a>}
+  <div class="nav-links">
+    {links.map((link) => {
+      const active = link.pagina === '' ? currentPath === '/' : currentPath.startsWith(`/${link.pagina}`);
+
+      return (
+        <a class:list={['nav-link', { active }]} href={pad(link.pagina)} aria-current={active ? 'page' : undefined}>
+          {link.label}
+        </a>
+      );
+    })}
+  </div>
+</nav>
+
+<style>
+  .site-nav {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.75rem 2rem;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  .nav-links {
+    display: flex;
+    flex: 1 1 100%;
+    justify-content: space-between;
+  }
+
+  .terug {
+    flex-basis: 100%;
+    text-decoration: none;
+  }
+
+  .nav-link {
+    border-left: 3px solid var(--olijf-licht);
+    padding-left: 0.5rem;
+    text-decoration: none;
+  }
+
+  .nav-link.active {
+    color: var(--wit);
+  }
+
+  .nav-link:hover,
+  .terug:hover {
+    color: var(--olijf-licht);
+  }
+
+  @media (min-width: 700px) {
+    .site-nav {
+      align-items: center;
+      padding: 1.25rem 2rem;
+      font-size: 1.25rem;
+    }
+
+    .site-nav.met-terug {
+      justify-content: space-between;
+    }
+
+    .nav-links {
+      flex: 0 0 auto;
+      gap: 3rem;
+    }
+
+    .terug {
+      flex-basis: auto;
+    }
+
+    .nav-link {
+      padding-left: 0.625rem;
+    }
+  }
+</style>

@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import DisplayTitle from '../components/DisplayTitle.astro';
+import { pad } from '../utils/pad';
+---
+
+<Base title="Pagina niet gevonden" description="Deze pagina bestaat niet op de portfolio van Jitse Van Laer.">
+  <main id="inhoud" class="niet-gevonden">
+    <DisplayTitle titel="404" omlijning="Oeps" max={130} />
+    <p>Deze pagina bestaat niet of is verhuisd.</p>
+    <a class="knop knop-creme" href={pad()}>Terug naar home</a>
+  </main>
+</Base>
+
+<style>
+  .niet-gevonden {
+    max-width: 75rem;
+    margin-inline: auto;
+    padding: 2rem 1rem 6rem;
+  }
+
+  p {
+    margin: 1.5rem 0;
+    font-size: 1.125rem;
+  }
+
+  @media (min-width: 700px) {
+    .niet-gevonden {
+      padding-inline: 2rem;
+    }
+  }
+</style>
