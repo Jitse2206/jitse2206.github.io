@@ -3,27 +3,33 @@ titel: 'Laptophouder'
 volgorde: 2
 stap: 1
 jaar: '2024 tot 2025'
-kort: 'ergonomisch, mijn eerste project'
+kort: 'In dit eerste project werd een ergonomische laptophouder ontworpen, later werd deze tot leven gebracht in een ontwerpbundel en door renders.'
 beschrijving: 'Een ergonomische laptophouder die in hoogte en hoek verstelt, later uitgewerkt met renders en een productbrochure.'
 intro: 'Mijn eerste project: een ergonomische laptophouder die je in hoogte en in hoek kunt verstellen. Een jaar later werkte ik hem verder uit met realistische renders en een productbrochure.'
-tijdlijn: 'prototyping oefenen, later renders en een ontwerpbundel'
+tijdlijn: |-
+  Jaar 1: prototype-technieken ontdekken
+  Jaar 2: renderen en een ontwerpbundel maken
 tags: ['prototyping', 'renders']
 technieken: ['lasersnijden', '3D printen', 'VRed', 'Affinity']
+briefing:
+  vak: 'Inleiding tot Industrieel Ontwerpen (jaar 1), Grafisch ontwerp (jaar 2)'
+  jaar: '1e bachelor, 2024 en 2e bachelor, 2025'
+  duur: 'Telkens één semester'
+  groepsproject: 'Nee'
+  opdracht: 'Ontwikkel een laptophouder die toelaat om een ergonomische werkhouding aan te nemen. De oplossing moet instelbaar en vlot te vervoeren zijn, en lasersnijden en FFF printen moeten erin terugkomen. In het tweede jaar: maak er een productbrochure van, met realistische renders.'
 teksten:
-  briefing: |-
-    Inleiding tot Industrieel Ontwerpen, 1e bachelor, 2024. Solo, een semester lang.
-
-    Ontwikkel een laptophouder die toelaat om een ergonomische werkhouding aan te nemen. De oplossing moet instelbaar en vlot te vervoeren zijn, en lasersnijden en FFF printen moeten erin terugkomen.
-
-    In het vak Grafisch ontwerp (2e bachelor, 2025) maakte ik er een productbrochure van, met realistische renders.
+  ideegeneratie: |-
+    Het concept kwam tot leven door enorm veel schetsen te maken. Ik vertrok van de gedachte "hoe kan ik iets optillen en kantelen?" en bedacht zo verschillende opties. Na veel ideeën af te wegen, kwam ik tot de eerste versie van mijn uiteindelijke ontwerp.
   technieken: |-
     Eerst maakte ik heel wat quick and dirty prototypes. Ook de systemen afzonderlijk heb ik geprototyped, voor ik aan de eindversie begon.
   resultaat: |-
     De laptophouder verstelt in hoogte met een schaarmechanisme, en ook in hoek. Ik heb hem getest met mijn eigen laptop.
   reflectie: |-
-    Het meest trots ben ik op het systeem met de driehoekjes. Nu zou ik ook naar andere materialen kijken.
+    Voor een eerste project ben ik hier zeker trots op. Het idee met de prisma's die langs de ene kant in elkaar klikken en langs de andere kant oprollen, vind ik nog steeds een goed concept. Nu zou ik verder kijken naar andere materialen, die de laptop misschien beter ondersteunen.
 
-    Bij de brochure ben ik het meest trots op de render. Volgende keer zou ik nog beter beeldmateriaal voorzien.
+    Had ik meer tijd gehad, dan zou ik nog onderzocht hebben hoe het onderblad automatisch kan oprollen. Dan blijft het ook strak opgerold als de houder dichtgevouwen is. Dat lijkt me zeker nog een meerwaarde.
+
+    Op de ontwerpbrochure ben ik ook trots. Ze weerspiegelt goed de strakheid en de industriële kant van de laptophouder. Als ik dit project zou hernemen, zou ik meer focussen op beter beeldmateriaal.
 techniekblokken:
   - titel: 'Prototypes'
     tekst: 'Prototypes van de afzonderlijke systemen en van de hele laptophouder.'
@@ -119,10 +125,10 @@ beelden:
     rol: techniek
     titel: 'Lasersnijden'
     alt: 'Gelaserde houten onderdelen van het frame met uitsparingen voor de verstelling'
-  - src: ./laptophouder-techniek-06.jpg
+  - src: ./laptophouder-techniek-12.jpg
     rol: techniek
     titel: '3D printen'
-    alt: 'Brochurepagina met 3D geprinte stroken in wit en grijs naast een 3D printer'
+    alt: 'Opgerolde strook stof met 3D geprinte zwarte driehoekjes'
   - src: ./laptophouder-techniek-07.jpg
     rol: techniek
     titel: 'Renders in VRed'
@@ -143,10 +149,4 @@ beelden:
     rol: techniek
     titel: 'Ontwerpbundel'
     alt: 'Brochurepagina met schetsen en renders van de laptophouder door elkaar'
-  - src: ./laptophouder-resultaat-01.jpg
-    rol: resultaat
-    alt: 'Render van de laptophouder op een keukentafel, naast een lachende vrouw met een notitieboek'
-  - src: ./laptophouder-resultaat-02.jpg
-    rol: resultaat
-    alt: 'Drie renders naast elkaar die tonen hoe de laptophouder verstelt'
 ---

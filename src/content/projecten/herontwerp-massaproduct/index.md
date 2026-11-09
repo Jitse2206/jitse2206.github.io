@@ -1,48 +1,50 @@
 ---
 titel: 'Herontwerp massaproduct'
 volgorde: 1
-stap: 2
+stap: 5
 jaar: '2026'
+kort: 'Er werd een nieuwe behuizing voor een bestaande klok ontworpen en geproduceerd.'
 beschrijving: 'Een nieuwe behuizing voor een bestaande klok, gemaakt met frezen, spuitgieten, resincasten en 3D printen.'
 intro: 'Een nieuwe behuizing voor een bestaande klok. Het doel: zoveel mogelijk productietechnieken zelf leren gebruiken, van idee tot afgewerkt product.'
-kort: 'nieuwe behuizing voor een bestaande klok'
 tijdlijn: 'frezen, spuitgieten, resincasten, 3D printen'
 tags: ['prototyping', 'CAD', 'groepswerk']
 technieken: ['frezen', 'spuitgieten', 'resincasten', '3D printen']
+briefing:
+  vak: 'Project engineering'
+  jaar: '2e bachelor, 2026'
+  duur: 'Eén semester'
+  groepsproject: 'Ja, met twee'
+  opdracht: 'Herontwerp de behuizing van een klok door gebruik te maken van verschillende productietechnieken.'
 teksten:
   briefing: |-
-    Project engineering, 2e bachelor, 2026. Een semester lang, in een team van twee.
-
-    De opdracht: herontwerp de behuizing van een klok met verschillende productietechnieken. We vertrokken van een goedkope digitale klok van de Action. Er moesten minstens vier productietechnieken in zitten, en alles moest demonteerbaar gemonteerd worden. Lijmverbindingen waren dus niet toegestaan.
+    We vertrokken van een goedkope digitale klok van de Action. Er moesten minstens vier productietechnieken in zitten, en alles moest demonteerbaar gemonteerd worden. Lijmverbindingen waren dus niet toegestaan.
 
     Ons doel was om de digitale klok het uiterlijk van een klassieke wekker te geven.
   ideegeneratie: |-
-    We begonnen met schetsen. Het uiteindelijke concept vonden we creatief, en we zagen er veel mogelijkheden in om verschillende productiemethodes uit te proberen.
+    We begonnen het project met inspiratie op te doen en daarna schetsen te maken van wat we mooi en origineel vonden. Voor ons was het belangrijk om veel nieuwe productiemethodes uit te proberen, en dus gingen we voor een concept waar we veel mogelijkheden in zagen.
   technieken: |-
     Elk onderdeel van de behuizing kreeg een andere techniek. Telkens was één van ons verantwoordelijk voor een onderdeel, maar we produceerden alle onderdelen samen.
-  resultaat: |-
-    De klok werkt en staat momenteel nog op school. Ik ben het meest trots op het idee en op hoe de nieuwe productietechnieken gelukt zijn.
   reflectie: |-
-    Ik heb geleerd hoe ik verschillende productietechnieken gebruik, en dat ik in de toekomst zeker meer rekening moet houden met toleranties.
+    In dit project ben ik zelfzekerder geworden in het gebruiken van verschillende productietechnieken. Waar ik in eerdere projecten vaak enkel met PLA printte, heb ik nu ontdekt dat andere technieken soms mooier of efficiënter kunnen zijn.
 
-    Nu zou ik de klok mooier proberen af te werken en meer letten op details, bijvoorbeeld door een logo toe te voegen.
+    Verder leerde ik het belang van toleranties. Daar hadden we in ons project meer rekening mee moeten houden.
+
+    Als ik deze klok opnieuw zou ontwerpen, zou ik meer aandacht steken in de afwerking. We waren tijdens dit project vaak enthousiast om iets bij te leren, waardoor we soms te snel begonnen in plaats van eerst alles goed te overwegen. Ik zou ook iets van kleur toevoegen, een logo of een andere soort afwerking. Nu gebruikten we steeds de kleur van het materiaal zelf, maar een lak of een kleuraccent zou misschien een beter effect geven. Uiteindelijk vind ik het wel een geslaagd project.
 techniekblokken:
   - titel: 'Frezen'
-    tekst: 'Het voor- en achtervlak zijn gefreesd. Eerst was de diepte niet goed ingegeven, waardoor niet alle afmetingen klopten. We hebben dat opgelost door met de hand te schuren en te boren. De afwerking zag er wel mooi uit.'
+    tekst: 'Het voor- en achtervlak zijn gefreesd. Omdat dit de eerste keer was, liep er van alles mis. De eerste keer was de afwerking niet mooi en begon het hout af te pellen. De tweede keer maakten we een rekenfout, waardoor we achteraf met de hand moesten bijwerken. Omdat we geen materiaal wilden verspillen aan een derde keer frezen, losten we dit creatief op. Uiteindelijk kreeg het hout een laklaagje, waardoor onze fouten niet meer te zien zijn.'
   - titel: 'Spuitgieten'
     tekst: 'De pootjes werden spuitgegoten, met de bout al in de mal. Dat verliep goed. De mal was niet helemaal opgevuld, waardoor er short shots op de pootjes zitten. Dat komt doordat de mal 3D geprint was om het goedkoper te houden.'
   - titel: 'Resincasten'
     tekst: 'De bellen werden gegoten met een dubbele mal. Dat verliep heel goed en ze zijn mooi afgewerkt.'
   - titel: '3D printen'
-    tekst: 'De zijkant werd geprint, zodat we er makkelijker op konden itereren. Ook de snoozeknop werd geprint, maar dan met SLA, waardoor hij een mooie doorschijnende afwerking heeft. De rubberen rand uit TPU werd uiteindelijk niet gebruikt.'
-  - titel: 'Modelleren in Siemens NX'
-    tekst: 'Alle onderdelen werden gemodelleerd in Siemens NX. Zelf modelleerde ik de rand, de snoozeknop, de andere knopjes en de bellen, met een technische tekening per onderdeel.'
+    tekst: 'In dit project werd ook geëxperimenteerd met 3D printen. Die techniek leerden we al vanaf het eerste jaar, maar in dit project gingen we verder. We printten met verschillende materialen. Zo is de snoozeknop geprint met SLA, waardoor hij veel nauwkeuriger is en we hem een doorzichtige kleur konden geven. Ook oefenden we met printen in rubber, maar dat onderdeel werd uiteindelijk niet gebruikt. Op de gewone PLA-printer bekeken we het effect van verschillende texturen en positioneermogelijkheden.'
 cover:
   src: ./cover.jpg
-  alt: 'Afgewerkte klok met houten voorplaat, zwarte rand en witte belletjes'
+  alt: 'Afgewerkte klok met houten voorplaat, zwarte rand en witte bellen, op een witte achtergrond'
 coverOrigineel:
   src: ./cover-origineel.jpg
-  alt: 'Afgewerkte klok met houten voorplaat, zwarte rand en witte belletjes op een wit oppervlak'
+  alt: 'Afgewerkte klok met houten voorplaat, zwarte rand en witte bellen op pootjes, op een witte achtergrond'
 beelden:
   - src: ./herontwerp-massaproduct-resultaat-01.jpg
     rol: resultaat
@@ -64,10 +66,6 @@ beelden:
     rol: techniek
     titel: 'Frezen'
     alt: 'CNC freesmachine die een cirkel uit een houten plaat freest'
-  - src: ./herontwerp-massaproduct-techniek-08.jpg
-    rol: techniek
-    titel: 'Frezen'
-    alt: 'CNC freesmachine die de houten plaat freest'
   - src: ./herontwerp-massaproduct-techniek-10.jpg
     rol: techniek
     titel: 'Frezen'
@@ -76,14 +74,6 @@ beelden:
     rol: techniek
     titel: 'Frezen'
     alt: 'Gefreesde ronde houten plaat met gaten'
-  - src: ./herontwerp-massaproduct-techniek-11.jpg
-    rol: techniek
-    titel: 'Frezen'
-    alt: 'Afwerken van de gefreesde plaat'
-  - src: ./herontwerp-massaproduct-techniek-12.jpg
-    rol: techniek
-    titel: 'Frezen'
-    alt: 'Gefreesde achterplaat in de hand'
   - src: ./herontwerp-massaproduct-techniek-13.jpg
     rol: techniek
     titel: 'Frezen'
@@ -108,18 +98,6 @@ beelden:
     rol: techniek
     titel: 'Spuitgieten'
     alt: 'Vier witte pootjes op een snijmat'
-  - src: ./herontwerp-massaproduct-techniek-35.jpg
-    rol: techniek
-    titel: 'Spuitgieten'
-    alt: 'Render van de matrijs voor de pootjes'
-  - src: ./herontwerp-massaproduct-techniek-36.jpg
-    rol: techniek
-    titel: 'Spuitgieten'
-    alt: 'Vloeisimulatie van het spuitgieten van de pootjes'
-  - src: ./herontwerp-massaproduct-techniek-06.jpg
-    rol: techniek
-    titel: 'Spuitgieten'
-    alt: 'Simulatie van het CNC draaien van een pootje'
   - src: ./herontwerp-massaproduct-techniek-29.jpg
     rol: techniek
     titel: 'Resincasten'
@@ -132,10 +110,6 @@ beelden:
     rol: techniek
     titel: 'Resincasten'
     alt: 'Blauwe kast met kijkvenster waarin een potje met de mal staat'
-  - src: ./herontwerp-massaproduct-techniek-19.jpg
-    rol: techniek
-    titel: 'Resincasten'
-    alt: 'Gegoten bel wordt uit de mal gehaald'
   - src: ./herontwerp-massaproduct-techniek-20.jpg
     rol: techniek
     titel: 'Resincasten'
@@ -156,128 +130,12 @@ beelden:
     rol: techniek
     titel: '3D printen'
     alt: '3D geprinte zwarte ringdelen van het middenstuk'
-  - src: ./herontwerp-massaproduct-techniek-03.jpg
-    rol: techniek
-    titel: '3D printen'
-    alt: 'Inzetmoer wordt met een soldeerbout in het geprinte middenstuk gezet'
-  - src: ./herontwerp-massaproduct-techniek-14.jpg
-    rol: techniek
-    titel: '3D printen'
-    alt: 'Zwarte testprints van de snoozeknop'
-  - src: ./herontwerp-massaproduct-techniek-15.jpg
-    rol: techniek
-    titel: '3D printen'
-    alt: 'Snoozeknop met ondersteuning in de slicer'
-  - src: ./herontwerp-massaproduct-techniek-16.jpg
-    rol: techniek
-    titel: '3D printen'
-    alt: 'SLA print van de snoozeknop met steunstructuur'
-  - src: ./herontwerp-massaproduct-techniek-17.jpg
-    rol: techniek
-    titel: '3D printen'
-    alt: 'Doorschijnende SLA print van de snoozeknop'
-  - src: ./herontwerp-massaproduct-techniek-18.jpg
-    rol: techniek
-    titel: '3D printen'
-    alt: 'Finale SLA print van de snoozeknop'
   - src: ./herontwerp-massaproduct-techniek-50.jpg
     rol: techniek
     titel: '3D printen'
     alt: 'Scherm van de 3D printer met de knoppen klaar om te printen'
-  - src: ./herontwerp-massaproduct-techniek-21.jpg
-    rol: techniek
-    titel: '3D printen'
-    alt: 'Zwarte geprinte knoppen op een tafel'
-  - src: ./herontwerp-massaproduct-techniek-22.jpg
-    rol: techniek
-    titel: '3D printen'
-    alt: 'Detail van zwarte geprinte knoppen'
   - src: ./herontwerp-massaproduct-techniek-23.jpg
     rol: techniek
     titel: '3D printen'
     alt: 'TPU print van de rubberen rand'
-  - src: ./herontwerp-massaproduct-techniek-24.jpg
-    rol: techniek
-    titel: '3D printen'
-    alt: 'Rubberen rand rond het middenstuk'
-  - src: ./herontwerp-massaproduct-techniek-30.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'Render van het 3D geprinte middenstuk van de klok'
-  - src: ./herontwerp-massaproduct-techniek-55.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'Technische tekening van het middenstuk met vooraanzicht en doorsnede'
-  - src: ./herontwerp-massaproduct-techniek-54.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'Technische tekening van de snoozeknop met afmetingen'
-  - src: ./herontwerp-massaproduct-techniek-53.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'Technische tekening van de knoppen met afmetingen'
-  - src: ./herontwerp-massaproduct-techniek-56.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'Technische tekening van de bel met doorsnede'
-  - src: ./herontwerp-massaproduct-techniek-31.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'Render van het middenstuk met assenkruis in NX'
-  - src: ./herontwerp-massaproduct-techniek-32.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'CAD-aanzicht van het middenstuk met assen'
-  - src: ./herontwerp-massaproduct-techniek-33.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'Detail van het middenstuk in NX'
-  - src: ./herontwerp-massaproduct-techniek-34.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'Analyse van het middenstuk in NX met maatpijlen'
-  - src: ./herontwerp-massaproduct-techniek-37.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'Render van de voorplaat met venster voor het scherm'
-  - src: ./herontwerp-massaproduct-techniek-38.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'Render van de achterplaat met gaten voor de knoppen'
-  - src: ./herontwerp-massaproduct-techniek-39.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'Detail van de achterplaat in NX'
-  - src: ./herontwerp-massaproduct-techniek-40.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'Render van de voorplaat in NX'
-  - src: ./herontwerp-massaproduct-techniek-41.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'Render van de achterplaat met knopgaten'
-  - src: ./herontwerp-massaproduct-techniek-42.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'Render van de achterplaat met uitsparingen'
-  - src: ./herontwerp-massaproduct-techniek-43.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'Render van de snoozeknop'
-  - src: ./herontwerp-massaproduct-techniek-44.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'Render van de snoozeknop van opzij'
-  - src: ./herontwerp-massaproduct-techniek-45.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'Render van een bel van de klok'
-  - src: ./herontwerp-massaproduct-techniek-46.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'Render van de binnenkant van een bel'
-  - src: ./herontwerp-massaproduct-techniek-47.jpg
-    rol: techniek
-    titel: 'Modelleren in Siemens NX'
-    alt: 'Render van de knoppen'
 ---

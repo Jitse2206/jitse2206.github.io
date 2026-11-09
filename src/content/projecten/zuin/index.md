@@ -1,21 +1,21 @@
 ---
-titel: 'Horloge'
+titel: 'ZUÏN'
 volgorde: 3
 stap: 4
 jaar: '2025 tot 2026'
-kort: 'duurzaam horloge voor kinderen'
+kort: 'ZUÏN helpt kinderen en ouders meer te weten te komen over het energieverbruik in huis, en bevordert de communicatie erover.'
 beschrijving: 'Een duurzaam horloge voor kinderen van 10 tot 12 jaar dat thuis toont in welke kamer er te veel energie verbruikt wordt.'
-intro: 'Een duurzaam horloge voor kinderen van 10 tot 12 jaar. Thuis toont het elke kamer als een eiland, en een eiland dat in brand vliegt, wijst op een piekverbruik. Ik was verantwoordelijk voor de UX en programmeerde de interface zelf in Arduino.'
+intro: 'ZUÏN is een duurzaam horloge voor kinderen van 10 tot 12 jaar. Wanneer het kind thuiskomt, krijgt het horloge een extra functie: er verschijnen eilandjes die elk een kamer van het huis voorstellen. Wordt er een piekverbruik gesignaleerd, dan geeft het eilandje dat aan met een brandend symbool. Het kind kan dan zelf op ontdekking waar het piekverbruik precies vandaan komt.'
 tijdlijn: 'groepsproject, gebruikersonderzoek met kinderen'
-tags: ['groepswerk', 'prototyping']
+tags: ['groepswerk', 'gebruiksgericht', 'interviews', 'arduino']
 technieken: ['gebruikersonderzoek', 'UX', 'Arduino', '3D printen']
+briefing:
+  vak: 'Project gebruiksgericht ontwerpen'
+  jaar: '2e bachelor, 2025 tot 2026'
+  duur: 'Eén volledig jaar'
+  groepsproject: 'Ja, met drie'
+  opdracht: 'Hoe kunnen slimme producten mensen helpen om op het juiste moment de juiste duurzame keuzes te maken, zonder extra cognitieve of financiële belasting?'
 teksten:
-  briefing: |-
-    Project gebruiksgericht ontwerpen, 2e bachelor, 2025 tot 2026. Een volledig jaar, in een team van drie.
-
-    De opdracht: hoe kunnen slimme producten mensen helpen om op het juiste moment de juiste duurzame keuzes te maken, zonder extra cognitieve of financiële belasting?
-
-    Wij ontwierpen een horloge voor kinderen van 10 tot 12 jaar. Overdag is het gewoon een horloge met enkel een klok, zodat het niet afleidt. Vanaf ze thuiskomen, verschijnt een interface waarop elke kamer van het huis een eiland is. Is er een piekverbruik in een kamer, dan vliegt dat eilandje in brand. De kinderen kunnen dan zelf het verbruik verminderen, of met hun ouders praten om te leren wat dat piekverbruik veroorzaakt.
   technieken: |-
     Dit project draaide vooral om gebruikersonderzoek. Het werk werd eerlijk verdeeld binnen het team.
   resultaat: |-
@@ -35,15 +35,15 @@ techniekblokken:
     tekst: 'Het horloge werd 3D geprint.'
 cover:
   src: ./cover.jpg
-  alt: 'Smartwatch met beige geprinte behuizing en rond scherm dat 12:58:51 toont'
+  alt: 'ZUÏN-horloge met beige geprinte band en een kleurrijk scherm met eilandjes, om een pols'
 coverOrigineel:
   src: ./cover-origineel.jpg
-  alt: 'Smartwatch met beige geprinte schakelband op een zwarte tafel, aangesloten op een lader'
+  alt: 'ZUÏN-horloge met beige geprinte band en een kleurrijk scherm met eilandjes, om de pols van een hand'
 beelden:
-  - src: ./horloge-resultaat-01.jpg
+  - src: ./zuin-resultaat-01.jpg
     rol: resultaat
     alt: 'Smartwatch met beige geprinte band en rond scherm, aangesloten op een lader'
-  - src: ./horloge-resultaat-02.jpg
+  - src: ./zuin-resultaat-02.jpg
     rol: resultaat
     alt: 'Smartwatch met beige geprinte band en een kleurrijk scherm op een zwarte tafel'
 ---

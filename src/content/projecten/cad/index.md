@@ -6,23 +6,27 @@ jaar: '2026'
 kort: 'solid en surface modelling'
 beschrijving: 'Solid en surface modelling in Siemens NX, gerenderd in VRed. Met een lijmpistool dat ik volledig zelf opbouwde.'
 intro: 'Solid en surface modelling in Siemens NX, met renders in VRed. Het moeilijkste stuk was het lijmpistool: dat moest ik volledig zelf opbouwen, zonder startbestand of stappenplan.'
-tijdlijn: 'solid en surface modelling, gerenderd'
+tijdlijn: 'solid en surface modelling, rendering'
 tags: ['CAD', 'renders']
 model:
   bestand: 'lijmpistool.glb'
   alt: 'Draaibaar 3D-model van het lijmpistool, gemodelleerd in Siemens NX'
 technieken: ['surface modelling', 'solid modelling', 'Siemens NX', 'VRed']
+briefing:
+  vak: 'Geavanceerde CAD'
+  jaar: '2e bachelor, 2026'
+  duur: 'Eén semester'
+  groepsproject: 'Nee'
+  opdracht: 'Modelleer een voorwerp naar keuze met surface modelling.'
 teksten:
   briefing: |-
-    Geavanceerde CAD, 2e bachelor, 2026. Solo, een semester lang.
-
-    De opdracht: modelleer een voorwerp naar keuze met surface modelling. Ik koos een bestaand lijmpistool en modelleerde het na.
+    Ik koos een bestaand lijmpistool en modelleerde het na.
   technieken: |-
     Het lijmpistool is gemodelleerd in Siemens NX en gerenderd in VRed.
   reflectie: |-
-    In dit vak leerde ik surface modelling. Daar wil ik zeker in blijven bijleren.
+    Surface modelling is een techniek waarin ik zeker nog wil blijven bijleren en oefenen. Ook realistisch renderen is een manier om niet-bestaande producten tastbaar te maken. Daar wil ik dus ook zeker nog verder in groeien.
   resultaat: |-
-    Het lijmpistool was het moeilijkste om te modelleren, omdat ik het volledig zelf moest opbouwen, zonder startbestand of stappenplan van de leerkracht. Er is geen fysiek prototype van gemaakt.
+    Het lijmpistool was het moeilijkste om te modelleren, omdat ik het volledig zelf moest opbouwen, zonder startbestand of stappenplan van de leerkracht.
 techniekblokken:
   - titel: 'Surface modelling'
     tekst: 'Ik vertrok van een bestaand lijmpistool en modelleerde het na met surface modelling.'
@@ -33,7 +37,7 @@ extra:
     - titel: 'Surface modelling'
       tekst: 'Een brandweerhelm, een haardroger en nog enkele andere modellen uit de CAD-oefeningen.'
     - titel: 'Solid modelling'
-      tekst: 'De solid modellen waren technische oefeningen die we van onze leerkracht moesten maken, niet per se een specifiek product. Ook de laptophouder modelleerde ik solid.'
+      tekst: 'Solid modelling leerde ik in het eerste jaar, in het vak CAD. Daar kregen we eerder technische oefeningen, niet per se specifieke producten. Al mijn eerder gemaakte producten werden ondersteund door CAD-tekeningen, gemaakt met solid modelling.'
 cover:
   src: ./cover.jpg
   alt: 'Render van een wit lijmpistool met groene trekker op een houten tafel, met een druppel lijm ervoor'
