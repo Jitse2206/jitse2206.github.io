@@ -16,7 +16,7 @@ const herhalingen = [0, 1];
         {items.map((item) => (
           <li>
             <span>{item}</span>
-            <span class="scheiding">✳</span>
+            <span class="scheiding"></span>
           </li>
         ))}
       </ul>
@@ -52,7 +52,13 @@ const herhalingen = [0, 1];
   }
 
   .scheiding {
-    padding-inline: 0.6em;
+    display: inline-block;
+    width: 0.4em;
+    height: 0.4em;
+    margin-inline: 0.8em;
+    border-radius: 50%;
+    background: currentColor;
+    vertical-align: middle;
   }
 
   @keyframes doorschuiven {

@@ -35,6 +35,15 @@ const projecten = defineCollection({
           blokken: z.array(blok).default([]),
         })
         .optional(),
+      briefing: z
+        .object({
+          vak: z.string(),
+          jaar: z.string(),
+          duur: z.string(),
+          groepsproject: z.string(),
+          opdracht: z.string(),
+        })
+        .optional(),
       teksten: z
         .object({
           briefing: z.string().optional(),

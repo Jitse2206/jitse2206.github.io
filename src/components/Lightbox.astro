@@ -3,7 +3,6 @@
   <button class="lightbox-knop lightbox-vorige" type="button" aria-label="Vorige foto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg></button>
   <figure class="lightbox-polaroid">
     <img class="lightbox-foto" alt="" />
-    <figcaption class="lightbox-onderschrift"></figcaption>
   </figure>
   <button class="lightbox-knop lightbox-volgende" type="button" aria-label="Volgende foto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg></button>
 </dialog>
@@ -13,7 +12,6 @@
 
   if (dialoog) {
     const foto = dialoog.querySelector<HTMLImageElement>('.lightbox-foto')!;
-    const onderschrift = dialoog.querySelector<HTMLElement>('.lightbox-onderschrift')!;
     let reeks: HTMLButtonElement[] = [];
     let huidige = 0;
     let startX = 0;
@@ -23,7 +21,6 @@
       const knop = reeks[huidige];
       foto.src = knop.dataset.vergroot ?? '';
       foto.alt = knop.dataset.alt ?? '';
-      onderschrift.textContent = knop.dataset.alt ?? '';
     };
 
     document.addEventListener('click', (event) => {
@@ -86,7 +83,7 @@
     gap: 0.75rem;
     max-width: calc(100vw - 10rem);
     margin: 0;
-    padding: 0.875rem 0.875rem 1.25rem;
+    padding: 0.875rem 0.875rem 2.25rem;
     background: var(--creme);
     box-shadow: 0 30px 60px -20px color-mix(in srgb, var(--inkt) 80%, transparent);
     transform: rotate(-1.5deg);
@@ -97,14 +94,6 @@
     max-height: 72dvh;
   }
 
-  .lightbox-onderschrift {
-    max-width: 40rem;
-    color: var(--inkt);
-    font-family: var(--font-hand);
-    font-size: 1.375rem;
-    line-height: 1.3;
-    text-align: center;
-  }
 
   .lightbox-knop {
     display: grid;
@@ -152,9 +141,6 @@
       padding: 0.5rem 0.5rem 0.875rem;
     }
 
-    .lightbox-onderschrift {
-      font-size: 1.125rem;
-    }
 
     .lightbox-vorige,
     .lightbox-volgende {

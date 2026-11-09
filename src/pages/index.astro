@@ -13,9 +13,8 @@ import portret from '../assets/jitse/jitse-uitgeknipt.png';
 const tijdlijn: TijdlijnItem[] = (await projectenOpStap())
   .filter((project) => project.data.stap !== undefined)
   .map((project) => ({
-    label: `stap ${project.data.stap}`,
     titel: project.data.titel,
-    details: project.data.tijdlijn ? [project.data.tijdlijn] : [],
+    details: project.data.tijdlijn ? project.data.tijdlijn.split('\n') : [],
     href: pad(`projecten/${project.id}/`),
     beeld: project.data.cover
   }));

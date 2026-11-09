@@ -33,7 +33,7 @@ interface Props {
 }
 
 const { project, vorige, volgende } = Astro.props;
-const { titel, stap, intro, beschrijving, tags, technieken, techniekblokken, extra, bundel, teksten, cover, coverOrigineel, model, beelden } = project.data;
+const { titel, stap, intro, beschrijving, tags, technieken, techniekblokken, extra, bundel, briefing, teksten, cover, coverOrigineel, model, beelden } = project.data;
 
 const [eersteWoord, ...overigeWoorden] = titel.split(' ');
 const label = stap !== undefined ? `project ${String(stap).padStart(2, '0')}` : '';
@@ -44,15 +44,23 @@ const techniekBeelden = beelden.filter((beeld) => beeld.rol === 'techniek');
 const techniekgroepen = groepeer(techniekblokken, techniekBeelden);
 const extragroepen = extra ? groepeer(extra.blokken, beelden.filter((beeld) => beeld.rol === 'extra')) : [];
 const resultaatBeelden = beelden.filter((beeld) => beeld.rol === 'resultaat');
-const [hoofdResultaat, ...andereResultaten] = resultaatBeelden.length > 0 ? resultaatBeelden : [coverOrigineel];
+const [hoofdResultaat, ...andereResultaten] = resultaatBeelden.length > 0 || bundel ? resultaatBeelden : [coverOrigineel];
 const kantelingen = [-2, 1.5, -1];
+const briefingRegels = briefing
+  ? [
+      { label: 'Vak', waarde: briefing.vak },
+      { label: 'Jaar', waarde: briefing.jaar },
+      { label: 'Duur', waarde: briefing.duur },
+      { label: 'Groepsproject', waarde: briefing.groepsproject },
+      { label: 'Opdracht', waarde: briefing.opdracht }
+    ]
+  : [];
 
 const toon = {
-  briefing: Boolean(teksten.briefing),
+  briefing: Boolean(briefing) || Boolean(teksten.briefing),
   ideegeneratie: Boolean(teksten.ideegeneratie) || ideeBeelden.length > 0,
   technieken: Boolean(teksten.technieken) || techniekBeelden.length > 0,
   resultaat: true,
-  bundel: Boolean(bundel),
   reflectie: Boolean(teksten.reflectie),
   extra: extragroepen.length > 0
 };
@@ -62,7 +70,6 @@ const secties = [
   { id: 'ideegeneratie', label: 'Ideegeneratie' },
   { id: 'technieken', label: 'Technieken' },
   { id: 'resultaat', label: 'Resultaat' },
-  { id: 'bundel', label: bundel?.titel ?? '' },
   { id: 'reflectie', label: 'Reflectie' },
   { id: 'extra', label: extra?.titel ?? '' }
 ].filter((sectie) => toon[sectie.id as keyof typeof toon]);
@@ -103,10 +110,20 @@ const buren = [
       </aside>
 
       <div class="proces-inhoud">
-        {teksten.briefing && (
+        {toon.briefing && (
           <section id="briefing" class="sectie" aria-labelledby="briefing-titel">
             <h2 id="briefing-titel" class="sectiekop">Briefing</h2>
-            {alineas(teksten.briefing).map((alinea) => <p class="sectietekst">{alinea}</p>)}
+            {briefingRegels.length > 0 && (
+              <dl class="briefing-lijst">
+                {briefingRegels.map((regel) => (
+                  <div class="briefing-regel">
+                    <dt>{regel.label}</dt>
+                    <dd>{regel.waarde}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+            {teksten.briefing && alineas(teksten.briefing).map((alinea) => <p class="sectietekst">{alinea}</p>)}
           </section>
         )}
 
@@ -147,11 +164,19 @@ const buren = [
               <Model3D bestand={model.bestand} alt={model.alt} />
             </div>
           )}
-          <div class="resultaat-rij">
-            <div class="resultaat-hoofd">
-              <ProjectBeeld beeld={hoofdResultaat} widths={[600, 900, 1200, 1600]} sizes="(min-width: 1200px) 830px, 92vw" />
+          {bundel && (
+            <div class="resultaat-bundel">
+              {bundel.tekst && alineas(bundel.tekst).map((alinea) => <p class="sectietekst">{alinea}</p>)}
+              <Boekje paginas={bundel.paginas} titel={bundel.titel} />
             </div>
-          </div>
+          )}
+          {hoofdResultaat && (
+            <div class="resultaat-rij">
+              <div class="resultaat-hoofd">
+                <ProjectBeeld beeld={hoofdResultaat} widths={[600, 900, 1200, 1600]} sizes="(min-width: 1200px) 830px, 92vw" />
+              </div>
+            </div>
+          )}
           {andereResultaten.length > 0 && (
             <ul class:list={['resultaatraster', { 'resultaatraster-weinig': andereResultaten.length <= 3 }]}>
               {andereResultaten.map((beeld) => (
@@ -162,14 +187,6 @@ const buren = [
             </ul>
           )}
         </section>
-
-        {bundel && (
-          <section id="bundel" class="sectie" aria-labelledby="bundel-titel">
-            <h2 id="bundel-titel" class="sectiekop">{bundel.titel}</h2>
-            {bundel.tekst && alineas(bundel.tekst).map((alinea) => <p class="sectietekst">{alinea}</p>)}
-            <Boekje paginas={bundel.paginas} titel={bundel.titel} />
-          </section>
-        )}
 
         {teksten.reflectie && (
           <section id="reflectie" class="sectie" aria-labelledby="reflectie-titel">
@@ -374,6 +391,35 @@ const buren = [
   .extra-sectie {
     padding-top: 3rem;
     border-top: 2px dashed color-mix(in srgb, var(--creme) 40%, transparent);
+  }
+
+  .briefing-lijst {
+    display: grid;
+    gap: 0.5rem;
+    max-width: 42.5rem;
+    margin: 1.125rem 0 0;
+  }
+
+  .briefing-regel {
+    display: grid;
+    grid-template-columns: 8.5rem minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .briefing-lijst dt {
+    color: var(--olijf-licht);
+    font-family: var(--font-hand);
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
+  .briefing-lijst dd {
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .resultaat-bundel {
+    margin-top: 1.75rem;
   }
 
   .reflectieblok p + p {
