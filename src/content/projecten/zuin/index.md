@@ -54,10 +54,10 @@ techniekblokken:
 meerLezen: 'https://github.com/Grotesmurf696/ZUIN/tree/main'
 cover:
   src: ./cover.jpg
-  alt: 'ZUÏN-horloge met beige geprinte band aan de lader op een houten tafel, met een eilandje en een vlammetje op het scherm'
+  alt: 'ZUÏN-horloge met beige geprinte band en een kleurrijk scherm met eilandjes, om een pols'
 coverOrigineel:
   src: ./cover-origineel.jpg
-  alt: 'ZUÏN-horloge met beige geprinte band aan de lader op een houten tafel, met een eilandje en een vlammetje op het scherm'
+  alt: 'ZUÏN-horloge met beige geprinte band en een kleurrijk scherm met eilandjes, om de pols van een hand'
 beelden:
   - src: ./zuin-idee-01.jpg
     rol: idee
