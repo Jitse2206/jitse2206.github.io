@@ -48,7 +48,7 @@ coverOrigineel:
 beelden:
   - src: ./herontwerp-massaproduct-resultaat-01.jpg
     rol: resultaat
-    alt: 'Onderdelen van de klok naast elkaar op een wit oppervlak'
+    alt: 'Afgewerkte klok met houten voorplaat, zwarte rand, witte bellen en pootjes, op een witte tafel'
   - src: ./herontwerp-massaproduct-idee-01.jpg
     rol: idee
     alt: 'Schetsboekpagina met een ronde wekker met twee bellen, met notities over de productietechniek per onderdeel'
@@ -66,10 +66,6 @@ beelden:
     rol: techniek
     titel: 'Frezen'
     alt: 'CNC freesmachine die een cirkel uit een houten plaat freest'
-  - src: ./herontwerp-massaproduct-techniek-10.jpg
-    rol: techniek
-    titel: 'Frezen'
-    alt: 'Houten plaat vastgeklemd op het freesbed'
   - src: ./herontwerp-massaproduct-techniek-09.jpg
     rol: techniek
     titel: 'Frezen'
@@ -90,14 +86,10 @@ beelden:
     rol: techniek
     titel: 'Spuitgieten'
     alt: 'Spuitgegoten pootjes met aanspuitkanaal op een witte plaat'
-  - src: ./herontwerp-massaproduct-techniek-04.jpg
+  - src: ./herontwerp-massaproduct-techniek-57.jpg
     rol: techniek
-    titel: 'Spuitgieten'
-    alt: 'Spuitgegoten pootjes met aanspuitkanaal'
-  - src: ./herontwerp-massaproduct-techniek-05.jpg
-    rol: techniek
-    titel: 'Spuitgieten'
-    alt: 'Vier witte pootjes op een snijmat'
+    titel: 'Resincasten'
+    alt: 'Twee witte gegoten bellen, een van buiten en een van binnen gezien'
   - src: ./herontwerp-massaproduct-techniek-29.jpg
     rol: techniek
     titel: 'Resincasten'
