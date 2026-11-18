@@ -16,11 +16,19 @@
     let huidige = 0;
     let startX = 0;
 
+    let laadbeurt = 0;
+
     const toon = (index: number) => {
       huidige = (index + reeks.length) % reeks.length;
       const knop = reeks[huidige];
+      const beurt = ++laadbeurt;
+      dialoog.classList.add('lightbox-laden');
       foto.src = knop.dataset.vergroot ?? '';
       foto.alt = knop.dataset.alt ?? '';
+      const klaar = () => {
+        if (beurt === laadbeurt) dialoog.classList.remove('lightbox-laden');
+      };
+      foto.decode().then(klaar, klaar);
     };
 
     document.addEventListener('click', (event) => {
@@ -31,6 +39,12 @@
       dialoog.classList.toggle('lightbox-enkel', reeks.length < 2);
       toon(reeks.indexOf(knop));
       dialoog.showModal();
+    });
+
+    dialoog.addEventListener('close', () => {
+      laadbeurt++;
+      foto.removeAttribute('src');
+      foto.alt = '';
     });
 
     dialoog.querySelector('.lightbox-sluit')?.addEventListener('click', () => dialoog.close());
@@ -94,6 +108,9 @@
     max-height: 72dvh;
   }
 
+  .lightbox-laden .lightbox-polaroid {
+    visibility: hidden;
+  }
 
   .lightbox-knop {
     display: grid;
@@ -140,7 +157,6 @@
       max-width: 100%;
       padding: 0.5rem 0.5rem 0.875rem;
     }
-
 
     .lightbox-vorige,
     .lightbox-volgende {
