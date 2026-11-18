@@ -9,6 +9,7 @@ import Model3D from '../../components/Model3D.astro';
 import KaartGroepen from '../../components/KaartGroepen.astro';
 import Notitie from '../../components/Notitie.astro';
 import Boekje from '../../components/Boekje.astro';
+import NaarBoven from '../../components/NaarBoven.astro';
 import { pad } from '../../utils/pad';
 import { alineas, groepeer, projectenOpStap } from '../../utils/projecten';
 import type { Project } from '../../utils/projecten';
@@ -230,6 +231,10 @@ const buren = [
         </a>
       ))}
     </nav>
+
+    <div class="onderaan">
+      <NaarBoven />
+    </div>
   </main>
 </Base>
 
@@ -524,6 +529,9 @@ const buren = [
     flex-wrap: wrap;
     gap: 1.5rem;
     padding-top: 5rem;
+  }
+
+  .onderaan {
     padding-bottom: 5rem;
   }
 
@@ -683,6 +691,9 @@ const buren = [
 
     .buren {
       padding-top: 6.875rem;
+    }
+
+    .onderaan {
       padding-bottom: 6.25rem;
     }
 

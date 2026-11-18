@@ -5,6 +5,7 @@ import DisplayTitle from '../components/DisplayTitle.astro';
 import Timeline from '../components/Timeline.astro';
 import TornPaper from '../components/TornPaper.astro';
 import Notitie from '../components/Notitie.astro';
+import NaarBoven from '../components/NaarBoven.astro';
 import { contact, educatie, intro, vaardigheden, werkervaring } from '../data/cv';
 import type { CvItem } from '../data/cv';
 import { pad } from '../utils/pad';
@@ -88,7 +89,7 @@ const kantelingen = [-2, 1.5, -1];
           </li>
         ))}
       </ul>
-      <p class="naar-boven"><a href="#boven">Naar boven</a></p>
+      <NaarBoven />
     </section>
   </main>
 </Base>
@@ -277,16 +278,6 @@ const kantelingen = [-2, 1.5, -1];
 
   .vaardigheden li::before {
     content: '•\00a0';
-  }
-
-  .naar-boven {
-    margin: 4.375rem 0 0;
-    font-size: 0.9375rem;
-    text-align: center;
-  }
-
-  .naar-boven a:hover {
-    color: var(--olijf-licht);
   }
 
   @media (min-width: 700px) {
