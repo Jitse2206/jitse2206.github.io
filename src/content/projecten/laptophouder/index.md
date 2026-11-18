@@ -117,10 +117,6 @@ beelden:
     rol: techniek
     titel: 'Prototypes'
     alt: 'Prototype van de laptophouder met zwarte plaat op een werkbank'
-  - src: ./laptophouder-techniek-04.jpg
-    rol: techniek
-    titel: 'Prototypes'
-    alt: 'Houten prototype met schaarmechanisme, vleugelmoeren en een opgerolde stof bovenaan'
   - src: ./laptophouder-techniek-05.jpg
     rol: techniek
     titel: 'Lasersnijden'
