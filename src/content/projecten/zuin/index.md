@@ -54,15 +54,47 @@ techniekblokken:
 meerLezen: 'https://github.com/Grotesmurf696/ZUIN/tree/main'
 cover:
   src: ./cover.jpg
-  alt: 'ZUÏN-horloge met beige geprinte band en een kleurrijk scherm met eilandjes, om een pols'
+  alt: 'ZUÏN-horloge met beige geprinte band aan de lader op een houten tafel, met een eilandje en een vlammetje op het scherm'
 coverOrigineel:
   src: ./cover-origineel.jpg
-  alt: 'ZUÏN-horloge met beige geprinte band en een kleurrijk scherm met eilandjes, om de pols van een hand'
+  alt: 'ZUÏN-horloge met beige geprinte band aan de lader op een houten tafel, met een eilandje en een vlammetje op het scherm'
 beelden:
+  - src: ./zuin-idee-01.jpg
+    rol: idee
+    alt: 'Quick and dirty prototype van een kartonnen knuffelbeer naast kaartjes met berichten'
+  - src: ./zuin-idee-02.jpg
+    rol: idee
+    alt: 'Quick and dirty prototype van een tamagotchi uit karton, met kaartjes van de schermen'
+  - src: ./zuin-idee-03.jpg
+    rol: idee
+    alt: 'De eerste prototypes samen op een tafel: de kartonnen beer, een horloge en een tamagotchi'
+  - src: ./zuin-techniek-01.jpg
+    rol: techniek
+    titel: 'Gebruikersonderzoek'
+    alt: 'Drie borden met gele en oranje post-its van de card sorting met ouders'
+  - src: ./zuin-techniek-02.jpg
+    rol: techniek
+    titel: 'Gebruikersonderzoek'
+    alt: 'Mascotte Leaf: een groen blaadje met een geel sjaaltje dat zwaait'
+  - src: ./zuin-techniek-03.jpg
+    rol: techniek
+    titel: 'Ergonomie'
+    alt: 'Geprinte horlogeprototypes in drie maten naast een zwart horloge en vier draaiknoppen'
+  - src: ./zuin-techniek-04.jpg
+    rol: techniek
+    titel: 'Ergonomie'
+    alt: 'Testopstelling in De Krook met horlogeprototypes, een laptop en een tablet op tafel'
+  - src: ./zuin-techniek-05.jpg
+    rol: techniek
+    titel: 'Materialen en kleuren'
+    alt: 'Kinderen bij een tafel met drie borden van de materiaal- en kleurtest'
   - src: ./zuin-resultaat-01.jpg
     rol: resultaat
-    alt: 'Smartwatch met beige geprinte band en rond scherm, aangesloten op een lader'
+    alt: 'ZUÏN-horloge aan de lader, met een groen eilandje op het scherm'
   - src: ./zuin-resultaat-02.jpg
     rol: resultaat
-    alt: 'Smartwatch met beige geprinte band en een kleurrijk scherm op een zwarte tafel'
+    alt: 'ZUÏN-horloge aan de lader, met een eilandje en een vlammetje op het scherm'
+  - src: ./zuin-resultaat-03.jpg
+    rol: resultaat
+    alt: 'ZUÏN-horloge aan de lader, met de tijd op het scherm'
 ---
