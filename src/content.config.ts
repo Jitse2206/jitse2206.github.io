@@ -59,6 +59,7 @@ const projecten = defineCollection({
           alt: z.string().min(1),
         })
         .optional(),
+      meerLezen: z.string().url().optional(),
       bundel: z
         .object({
           titel: z.string().default('Ontwerpbundel'),

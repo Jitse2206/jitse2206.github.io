@@ -33,7 +33,7 @@ interface Props {
 }
 
 const { project, vorige, volgende } = Astro.props;
-const { titel, stap, intro, beschrijving, tags, technieken, techniekblokken, extra, bundel, briefing, teksten, cover, coverOrigineel, model, beelden } = project.data;
+const { titel, stap, intro, beschrijving, tags, technieken, techniekblokken, extra, meerLezen, bundel, briefing, teksten, cover, coverOrigineel, model, beelden } = project.data;
 
 const [eersteWoord, ...overigeWoorden] = titel.split(' ');
 const label = stap !== undefined ? `project ${String(stap).padStart(2, '0')}` : '';
@@ -194,6 +194,11 @@ const buren = [
             <div class="reflectieblok">
               {alineas(teksten.reflectie).map((alinea) => <p>{alinea}</p>)}
             </div>
+            {meerLezen && (
+              <a class="knop knop-creme meer-lezen" href={meerLezen} rel="noopener">
+                Meer lezen over dit project ↗
+              </a>
+            )}
           </section>
         )}
 
@@ -508,6 +513,10 @@ const buren = [
 
   .reflectieblok p {
     margin: 0;
+  }
+
+  .meer-lezen {
+    margin-top: 1.5rem;
   }
 
   .buren {
