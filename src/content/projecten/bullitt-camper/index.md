@@ -41,10 +41,10 @@ techniekblokken:
     tekst: 'Om de stevigheid te testen, bouwde ik de helft van de constructie op ware grootte. Zo leerde ik dat de bak beter onder het buitenste paneel staat dan helemaal aan het uiteinde, zodat het gewicht beter verdeeld wordt.'
 cover:
   src: ./cover.jpg
-  alt: 'Schaalmodel van de Bullitt Camper: blauwe tent op een zwart opklapbaar platform'
+  alt: 'Schaalmodel van de Bullitt Camper: blauwe tent op twee zwarte opbergbakken, met de fietshouder vooraan'
 coverOrigineel:
   src: ./cover-origineel.jpg
-  alt: 'Titelblad Bullitt Camper met het schaalmodel en de blauwe tent'
+  alt: 'Schaalmodel van de Bullitt Camper met blauwe tent en open ingang, op een lichte achtergrond'
 beelden:
   - src: ./bullitt-camper-idee-01.jpg
     rol: idee
@@ -64,72 +64,49 @@ beelden:
   - src: ./bullitt-camper-idee-30.jpg
     rol: idee
     alt: 'Schetsen van een bak met hangslot en een slot aan de zijkant'
-  - src: ./bullitt-camper-idee-34.jpg
+  - src: ./bullitt-camper-idee-50.jpg
     rol: idee
-    alt: 'Kartonmodel van een platform met drie papieren bogen'
-  - src: ./bullitt-camper-idee-37.jpg
+    alt: 'Kartonmodel van een vijfhoekige bak met vakken, in de hand gehouden'
+  - src: ./bullitt-camper-idee-51.jpg
     rol: idee
-    alt: 'Kartonmodel van een zeshoekige bak met uitklapbaar platform'
-  - src: ./bullitt-camper-idee-41.jpg
+    alt: 'Kartonmodel in de vorm van een huisje met opbergvakken'
+  - src: ./bullitt-camper-idee-52.jpg
     rol: idee
-    alt: 'Finaal kartonmodel van de ondergrond met twee opbergvakken'
-  - src: ./bullitt-camper-idee-46.jpg
+    alt: 'Kartonmodel van een bak met twee vakken'
+  - src: ./bullitt-camper-idee-53.jpg
+    rol: idee
+    alt: 'Tentframe uit bouwpakketstaven met vier poten'
+  - src: ./bullitt-camper-idee-54.jpg
+    rol: idee
+    alt: 'Tentframe met twee gekruiste blauwe bogen op een rechthoekige basis'
+  - src: ./bullitt-camper-idee-55.jpg
     rol: idee
     alt: 'Tentframe met drie witte bogen op een rechthoekige basis'
-  - src: ./bullitt-camper-idee-47.jpg
+  - src: ./bullitt-camper-idee-56.jpg
     rol: idee
-    alt: 'Testtent uit geel doek over witte bogen, vooraanzicht'
+    alt: 'Testtent uit geel doek over witte en blauwe bogen'
+  - src: ./bullitt-camper-idee-57.jpg
+    rol: idee
+    alt: 'Ingekleurde schets van een bakfiets met een tent op de laadbak'
   - src: ./bullitt-camper-idee-49.jpg
     rol: idee
     alt: 'Ingekleurd storyboard: van losse fietstassen naar een afsluitbare bak met tent'
-  - src: ./bullitt-camper-resultaat-01.jpg
-    rol: resultaat
-    alt: 'Gesloten zwarte bak van het schaalmodel met de stuurhouder ervoor'
-  - src: ./bullitt-camper-resultaat-02.jpg
-    rol: resultaat
-    alt: 'Gesloten zwarte bak van het schaalmodel, vooraanzicht'
-  - src: ./bullitt-camper-resultaat-03.jpg
-    rol: resultaat
-    alt: 'Opbergbak met uitgeschoven lade van het schaalmodel'
-  - src: ./bullitt-camper-resultaat-04.jpg
-    rol: resultaat
-    alt: 'Uitgeklapt platform van het schaalmodel op twee opbergbakken'
-  - src: ./bullitt-camper-resultaat-05.jpg
-    rol: resultaat
-    alt: 'Detail van een opbergbak onder het uitgeklapte platform'
-  - src: ./bullitt-camper-resultaat-06.jpg
-    rol: resultaat
-    alt: 'Schaalmodel met blauwe tent op het gras'
-  - src: ./bullitt-camper-resultaat-07.jpg
-    rol: resultaat
-    alt: 'Blauw tentzeil met een flexibele buis als boog'
-  - src: ./bullitt-camper-resultaat-08.jpg
-    rol: resultaat
-    alt: 'Blauw tentzeil met boog, zijaanzicht'
-  - src: ./bullitt-camper-resultaat-09.jpg
-    rol: resultaat
-    alt: 'Blauwe tent bevestigd op de zwarte opbergbakken met drukknopen'
-  - src: ./bullitt-camper-resultaat-10.jpg
-    rol: resultaat
-    alt: 'Detail van het zwarte geprinte platform met gaten voor de bogen'
-  - src: ./bullitt-camper-resultaat-11.jpg
-    rol: resultaat
-    alt: 'Schaalmodel met opengeklapt deksel en een uitgeschoven lade'
-  - src: ./bullitt-camper-resultaat-12.jpg
-    rol: resultaat
-    alt: 'Schaalmodel met blauwe tent op zwarte opbergbakken'
-  - src: ./bullitt-camper-techniek-01.jpg
+  - src: ./bullitt-camper-techniek-08.jpg
     rol: techniek
     titel: '3D printen'
-    alt: 'Geprinte testbak die onder een platformdeel schuift'
-  - src: ./bullitt-camper-techniek-02.jpg
+    alt: 'Zwarte 3D geprinte bak naast een deel van het platform'
+  - src: ./bullitt-camper-techniek-09.jpg
     rol: techniek
     titel: '3D printen'
-    alt: 'Detail van een geprint platformdeel met schuifrail'
-  - src: ./bullitt-camper-techniek-03.jpg
+    alt: 'Zwarte 3D geprinte bak met twee schuiven'
+  - src: ./bullitt-camper-techniek-10.jpg
     rol: techniek
     titel: '3D printen'
-    alt: 'Geprint prototype van het schuifsysteem met twee bakken'
+    alt: 'Geprinte bak met een uitgeschoven lade'
+  - src: ./bullitt-camper-techniek-11.jpg
+    rol: techniek
+    titel: '3D printen'
+    alt: 'Geprint schaalmodel met opengeklapt platform en uitgeschoven lade'
   - src: ./bullitt-camper-techniek-04.jpg
     rol: techniek
     titel: 'Prototype op ware grootte'
@@ -146,4 +123,25 @@ beelden:
     rol: techniek
     titel: 'Prototype op ware grootte'
     alt: 'Iemand ligt met een matje op het prototype op ware grootte'
+  - src: ./bullitt-camper-resultaat-13.jpg
+    rol: resultaat
+    alt: 'Schaalmodel van de Bullitt Camper met blauwe tent in het gras'
+  - src: ./bullitt-camper-resultaat-14.jpg
+    rol: resultaat
+    alt: 'Schaalmodel met blauwe tent en open ingang in het gras'
+  - src: ./bullitt-camper-resultaat-15.jpg
+    rol: resultaat
+    alt: 'Schaalmodel met blauwe tent schuin van voren, in het gras'
+  - src: ./bullitt-camper-resultaat-16.jpg
+    rol: resultaat
+    alt: 'Close-up van de open ingang van de blauwe tent met het zwarte platform'
+  - src: ./bullitt-camper-resultaat-17.jpg
+    rol: resultaat
+    alt: 'Uitgeklapt zwart platform op de opbergbakken, met de fietshouder'
+  - src: ./bullitt-camper-resultaat-18.jpg
+    rol: resultaat
+    alt: 'Uitgeklapt platform op de opbergbakken van opzij'
+  - src: ./bullitt-camper-resultaat-19.jpg
+    rol: resultaat
+    alt: 'Dichtgeklapte zwarte bak van het schaalmodel'
 ---
