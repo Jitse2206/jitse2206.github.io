@@ -89,7 +89,7 @@ beelden:
   - src: ./herontwerp-massaproduct-techniek-57.jpg
     rol: techniek
     titel: 'Resincasten'
-    alt: 'Twee witte gegoten bellen, een van buiten en een van binnen gezien'
+    alt: 'Twee witte gegoten bellen naast elkaar, de ene ondersteboven en de andere open'
   - src: ./herontwerp-massaproduct-techniek-29.jpg
     rol: techniek
     titel: 'Resincasten'
@@ -102,10 +102,6 @@ beelden:
     rol: techniek
     titel: 'Resincasten'
     alt: 'Blauwe kast met kijkvenster waarin een potje met de mal staat'
-  - src: ./herontwerp-massaproduct-techniek-20.jpg
-    rol: techniek
-    titel: 'Resincasten'
-    alt: 'Twee gegoten bellen op een tafel'
   - src: ./herontwerp-massaproduct-techniek-28.jpg
     rol: techniek
     titel: '3D printen'
